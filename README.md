@@ -1,12 +1,18 @@
-# Template
-This is a template repo (insert  description here)
+# Window
 
+A small cross platform window library.
 
-## Building
-Building with CMake
+This is still largely a work in progress.  
 
-```txt
-mkdir build
-cd build
-cmake ..
-```
+## Current state
+
++ Win32 Native
++ X11 Native
++ SDL Windows, Linux
+
+## Goals
+
++ Should be able to load, create and manage at least one toplevel window.
++ Handle all user input.
++ Setup OpenGL automatically
+  

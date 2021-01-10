@@ -1,6 +1,6 @@
 /*
 -------------------------------------------------------------------------------
-    Copyright (c) 2019 Charles Carley.
+    Copyright (c) Charles Carley.
 
   This software is provided 'as-is', without any express or implied
   warranty. In no event will the authors be held liable for any damages
@@ -107,7 +107,7 @@ public:
             if (m_val > 1)
                 m_val = 0;
 
-            // just it keep it refreshing here.
+            // just to keep it refreshing.
             // normally this should be done when
             // the render state has changed
             window->flush();
