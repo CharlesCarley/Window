@@ -1,0 +1,6 @@
+[submodule "Extern/SDL"]
+	path = Extern/SDL
+	url = https://github.com/CharlesCarley/SDL.git
+[submodule "Extern/Utils"]
+	path = Extern/Utils
+	url = https://github.com/CharlesCarley/Utils.git

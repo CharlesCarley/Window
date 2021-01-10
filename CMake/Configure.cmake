@@ -20,3 +20,35 @@
 # ------------------------------------------------------------------------------
 include(StaticRuntime)
 set_static_runtime()
+
+option(Window_USE_FOLDERS       "Use solution folders" ON)
+
+if (Window_USE_FOLDERS)
+    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+    set(CMAKE_USE_FOLDERS TRUE)
+endif()
+
+find_package(OpenGL  QUIET REQUIRED)
+
+
+set(Extern_PATH ${CMAKE_SOURCE_DIR}/Extern)
+
+set(Utils_ExternalTarget TRUE)
+set(Utils_TargetFolders  ${CMAKE_USE_FOLDERS})
+set(Utils_TargetName     Utils)
+set(Utils_TargetGroup    Extern)
+set(Utils_INCLUDE        ${Extern_PATH})
+set(Utils_LIBRARY        ${Utils_TargetName})
+
+set(Window_ExternalTarget      False)
+set(Window_TargetFolders       ${CMAKE_USE_FOLDERS})
+set(Window_TargetName          Window)
+set(Window_TargetGroup         Extern)
+set(Window_INCLUDE             ${CMAKE_SOURCE_DIR} ${OPENGL_INCLUDE})
+
+
+set(SDL_FOLDER   ${Utils_TargetGroup})
+set(SDL_INCLUDE  ${Extern_PATH}/SDL/SDL)
+set(SDL_LIBRARY  SDL2main SDL2-static)
+
+set(Extern_LIBS ${Utils_TargetName} ${Window_TargetName} ${OPENGL_LIBRARIES})
