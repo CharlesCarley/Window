@@ -304,8 +304,212 @@ void skWindowX11::notifySize(SKuint32 w, SKuint32 h)
     m_height = h;
 }
 
-void skWindowX11::notifyMotion(SKint32 x, SKint32 y) const
+void skWindowX11::handleMotion(const XMotionEvent& event) const
 {
-    m_mouse->x.abs = x;
-    m_mouse->y.abs = y;
+    __notifyMotion(event.x, event.y);
+}
+
+void skWindowX11::handleButton(const XButtonEvent& event) const
+{
+    __notifyMotion(event.x, event.y);
+
+    SKint32 button = MBT_None;
+    if (event.button == 1)
+        button = MBT_L;
+    else if (event.button == 2)
+        button = MBT_M;
+    else if (event.button == 3)
+        button = MBT_R;
+
+    if (button != MBT_None)
+        __notifyButton(button, event.type == ButtonPress ? WM_PRESSED : WM_RELEASED);
+}
+
+void skWindowX11::handleWheel(const XButtonEvent& event) const
+{
+    if (event.button == 4 || event.button == 5)
+        __notifyWheel(event.button == 4 ? 1 : -1);
+}
+
+
+void skWindowX11::handleKey(XEvent& event) const
+{
+    const SKint32 code = getScanCode(XLookupKeysym(&event.xkey, 0));
+
+    if (code <= KC_NONE || code >= KC_MAX)
+        return;
+
+    __notifyKey(code, event.xkey.type == KeyPress ? WM_PRESSED : WM_RELEASED);
+}
+
+SKint32 skWindowX11::getScanCode(const SKint32& code)
+{
+    if (code >= XK_0 && code <= XK_9)
+        return (SKint32)KC_0 + (code - XK_0);
+    if (code >= XK_A && code <= XK_Z)
+        return (SKint32)KC_A + (code - XK_A);
+    if (code >= XK_a && code <= XK_z)
+        return (SKint32)KC_A + (code - XK_a);
+    if (code >= XK_F1 && code <= XK_F12)
+        return (SKint32)KC_F1 + (code - XK_F1);
+    if (code >= XK_KP_0 && code <= XK_KP_9)
+        return (SKint32)KC_PAD0 + (code - XK_KP_0);
+
+    switch (code)
+    {
+    case XK_KP_Insert:  // comes in ! (as XK_KP_0)
+        return KC_PAD0;
+    case XK_KP_Delete:
+        return KC_PAD_PERIOD;
+    case XK_KP_End:
+        return KC_PAD1;
+    case XK_KP_Down:
+        return KC_PAD2;
+    case XK_KP_Page_Down:
+        return KC_PAD3;
+    case XK_KP_Left:
+        return KC_PAD4;
+    case XK_KP_Begin:
+        return KC_PAD5;
+    case XK_KP_Right:
+        return KC_PAD6;
+    case XK_KP_Home:
+        return KC_PAD7;
+    case XK_KP_Up:
+        return KC_PAD8;
+    case XK_KP_Page_Up:
+        return KC_PAD9;
+    case XK_apostrophe:
+        return KC_QUOTE;
+    case XK_Page_Up:
+        return KC_PAGEUP;
+    case XK_Page_Down:
+        return KC_PAGEDOWN;
+    case XK_Linefeed:
+        return KC_LINEFEED;
+    case XK_BackSpace:
+        return KC_BACKSPACE;
+    case XK_Tab:
+        return KC_TAB;
+    case XK_Return:
+        return KC_RET;
+    case XK_Pause:
+        return KC_PAUSE;
+    case XK_Escape:
+        return KC_ESC;
+    case XK_Delete:
+        return KC_DEL;
+    case XK_Home:
+        return KC_HOME;
+    case XK_Left:
+        return KC_LEFT;
+    case XK_Up:
+        return KC_UP;
+    case XK_Right:
+        return KC_RIGHT;
+    case XK_Down:
+        return KC_DOWN;
+    case XK_End:
+        return KC_END;
+    case XK_Insert:
+        return KC_INSERT;
+    case XK_KP_Enter:
+        return KC_PAD_RET;
+    case XK_KP_Multiply:
+        return KC_PAD_MUL;
+    case XK_KP_Add:
+        return KC_PAD_ADD;
+    case XK_KP_Subtract:
+        return KC_PAD_SUB;
+    case XK_KP_Divide:
+        return KC_PAD_DIV;
+    case XK_KP_Decimal:
+        return KC_PAD_PERIOD;
+    case XK_Shift_L:
+        return KC_LSHIFT;
+    case XK_Shift_R:
+        return KC_RSHIFT;
+    case XK_Control_L:
+        return KC_LCTRL;
+    case XK_Control_R:
+        return KC_RCTRL;
+    case XK_Caps_Lock:
+        return KC_CAPSLOCK;
+    case XK_Alt_L:
+        return KC_LALT;
+    case XK_Alt_R:
+        return KC_RALT;
+    case XK_space:
+        return KC_SPACE;
+    case XK_comma:
+        return KC_COMMA;
+    case XK_minus:
+        return KC_MINUS;
+    case XK_period:
+        return KC_PERIOD;
+    case XK_slash:
+        return KC_SLASH;
+    case XK_semicolon:
+        return KC_SEMICOLON;
+    case XK_equal:
+        return KC_EQUAL;
+    case XK_bracketleft:
+        return KC_LEFTBRACKET;
+    case XK_backslash:
+        return KC_BACKSLASH;
+    case XK_bracketright:
+        return KC_RIGHTBRACKET;
+    case XK_grave:
+        return KC_ACCENTGRAVE;
+    default:
+    case XK_asciicircum:
+    case XK_underscore:
+    case XK_braceleft:
+    case XK_bar:
+    case XK_braceright:
+    case XK_asciitilde:
+    case XK_at:
+    case XK_question:
+    case XK_greater:
+    case XK_less:
+    case XK_colon:
+    case XK_exclam:
+    case XK_quotedbl:
+    case XK_numbersign:
+    case XK_dollar:
+    case XK_percent:
+    case XK_ampersand:
+    case XK_parenleft:
+    case XK_parenright:
+    case XK_asterisk:
+    case XK_plus:
+    case XK_Meta_L:
+    case XK_Meta_R:
+    case XK_Super_L:
+    case XK_Super_R:
+    case XK_Hyper_L:
+    case XK_Hyper_R:
+    case XK_Shift_Lock:
+    case XK_KP_Separator:
+    case XK_KP_Equal:
+    case XK_Mode_switch:
+    case XK_Num_Lock:
+    case XK_KP_Space:
+    case XK_KP_Tab:
+    case XK_Execute:
+    case XK_Print:
+    case XK_Select:
+    case XK_Begin:
+    case XK_Sys_Req:
+    case XK_Scroll_Lock:
+    case XK_Clear:
+    case XK_Undo:
+    case XK_Redo:
+    case XK_Menu:
+    case XK_Find:
+    case XK_Cancel:
+    case XK_Help:
+    case XK_Break:
+        return KC_MAX;
+    }
 }

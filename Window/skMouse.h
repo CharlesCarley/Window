@@ -62,6 +62,14 @@ class skMouse
 {
 private:
     SKmouseTable m_table;
+    friend class skWindow;
+
+
+    SKint32 m_states[4];
+
+    void notifyMotion(const SKint32& xPos, const SKint32& yPos);
+    void notifyWheel(const SKint32& zPos);
+    void notifyButton(const SKint32& button, const SKuint8& state);
 
 public:
     skMouse();
@@ -80,10 +88,6 @@ public:
         return m_table;
     }
 
-    /// <summary>
-    /// Counter for the number of buttons held down at any one time.
-    /// </summary>
-    SKuint32 count;
 
     /// <summary>
     /// The axis is split into two values absolute and relative.

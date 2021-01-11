@@ -38,6 +38,15 @@ protected:
 
     friend class skWindowManager;
 
+
+    void __notifyMotion(const SKint32& xPos, const SKint32& yPos) const;
+
+    void __notifyWheel(const SKint32& zDelta) const;
+
+    void __notifyButton(const SKint32& button, const SKuint8& state) const;
+
+    void __notifyKey(const SKint32& key, const SKuint8& state) const;
+
     /// <summary>
     /// Actually creates the window.
     /// </summary>
@@ -55,8 +64,9 @@ protected:
     skWindow(skWindowManager* creator);
 
 private:
-
     void initialize();
+
+
 
 public:
     virtual ~skWindow();

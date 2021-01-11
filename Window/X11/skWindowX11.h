@@ -31,6 +31,8 @@
 #include "Window/skWindowTypes.h"
 class skWindowContextX11;
 
+
+
 class skWindowX11 final : public skWindow
 {
 private:
@@ -46,6 +48,17 @@ private:
     void notifyMaximized(void) const;
     void notifyTitle(void) const;
     void notifyShow(void) const;
+    void notifySize(SKuint32 w, SKuint32 h);
+
+    friend class skWindowContextX11;
+
+    static SKint32 getScanCode(const SKint32& code);
+
+
+    void handleKey( XEvent& event) const;
+    void handleMotion(const XMotionEvent& event) const;
+    void handleButton(const XButtonEvent& event) const;
+    void handleWheel(const XButtonEvent& event) const;
 
 public:
     skWindowX11(skWindowManager* creator);
@@ -61,9 +74,6 @@ public:
     {
         return m_window ? (SKsize)m_window : SK_NPOS;
     }
-
-    void notifySize(SKuint32 w, SKuint32 h);
-    void notifyMotion(SKint32 x, SKint32 y) const;
 };
 
 #endif  //_skWindowX11_h_

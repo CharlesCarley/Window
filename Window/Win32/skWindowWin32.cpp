@@ -22,12 +22,19 @@
 #include "Window/Win32/skWindowWin32.h"
 #include "OpenGL/skOpenGL.h"
 #include "Utils/skPlatformHeaders.h"
-#include "Window/skKeyboard.h"
-#include "Window/skMouse.h"
 #include "Window/skWindowContext.h"
 #include "Window/skWindowManager.h"
 #include "Window/skWindowTypes.h"
 #include "skWindowContextWin32.h"
+
+#define MOUSE_STATE(m) ((m) == WM_LBUTTONDOWN || (m) == WM_MBUTTONDOWN || \
+                        (m) == WM_RBUTTONDOWN)                            \
+                           ? WM_PRESSED                                   \
+                           : WM_RELEASED
+
+#define KEY_STATE(m) ((m) == WM_SYSKEYDOWN || (m) == WM_KEYDOWN) \
+                         ? WM_PRESSED                            \
+                         : WM_RELEASED
 
 
 skWindowWin32::skWindowWin32(skWindowManager* creator) :
@@ -67,6 +74,8 @@ void skWindowWin32::create(const char* title, SKuint32 width, SKuint32 height, S
         winStyle |= WS_MAXIMIZE;
 
     SKuint32 xPos = 0, yPos = 0;
+
+
     if (flags & WM_WF_CENTER)
     {
         const int scx = GetSystemMetrics(SM_CXSCREEN);
@@ -155,44 +164,6 @@ void skWindowWin32::flush(void)
 
 void skWindowWin32::capture(void)
 {
-    RECT  rect;
-    POINT pos;
-    GetCursorPos(&pos);
-    GetWindowRect(m_hWnd, &rect);
-
-    pos.x -= rect.left;
-    pos.y -= rect.top;
-    m_mouse->x.abs = pos.x;
-    m_mouse->y.abs = pos.y;
-
-    if (!m_init)
-    {
-        m_init = true;
-        m_lx   = pos.x;
-        m_ly   = pos.y;
-        m_lz   = 0;
-    }
-
-    m_mouse->x.rel = pos.x - m_lx;
-    m_mouse->y.rel = pos.y - m_ly;
-
-    m_mouse->z.rel = 0;
-    if (m_pz != 0)
-    {
-        if (m_pz > 0)
-            m_lz += 1;
-        else
-            m_lz -= 1;
-        m_mouse->z.rel = m_pz > 0 ? 1 : -1;
-        m_mouse->z.abs = m_lz;
-
-        m_pz = 0;
-    }
-    m_lx = (rect.left + rect.right) / 2;
-    m_ly = (rect.top + rect.bottom) / 2;
-    SetCursorPos(m_lx, m_ly);
-    m_lx -= rect.left;
-    m_ly -= rect.top;
 }
 
 void skWindowWin32::setupOpenGL(void)
@@ -232,9 +203,11 @@ void skWindowWin32::makeCurrent() const
 }
 
 
-void skWindowWin32::handleMouse(SKuint32 msg, SKuintPtr wParam, SKuintPtr lParam)
+void skWindowWin32::handleMouse(const SKuint32&  message,
+                                const SKuintPtr& wParam,
+                                const SKuintPtr& lParam) const
 {
-    switch (msg)
+    switch (message)
     {
     case WM_LBUTTONDOWN:
     case WM_MBUTTONDOWN:
@@ -243,91 +216,37 @@ void skWindowWin32::handleMouse(SKuint32 msg, SKuintPtr wParam, SKuintPtr lParam
     case WM_MBUTTONUP:
     case WM_RBUTTONUP:
     {
-        const bool down = msg == WM_LBUTTONDOWN ||
-                          msg == WM_MBUTTONDOWN ||
-                          msg == WM_RBUTTONDOWN;
-        SKmouseTable& table = m_mouse->getTable();
+        __notifyMotion(LOWORD(lParam), HIWORD(lParam));
 
+        SKint32 button;
+        if (message == WM_LBUTTONDOWN || message == WM_LBUTTONUP)
+            button = MBT_L;
+        else if (message == WM_MBUTTONDOWN || message == WM_MBUTTONUP)
+            button = MBT_M;
+        else
+            button = MBT_R;
 
-        if (msg == WM_LBUTTONDOWN || msg == WM_LBUTTONUP)
-            table[MBT_L] = down;
-        else if (msg == WM_MBUTTONDOWN || msg == WM_MBUTTONUP)
-            table[MBT_M] = down;
-        else if (msg == WM_RBUTTONDOWN || msg == WM_RBUTTONUP)
-            table[MBT_R] = down;
-
-        if (getContext()->shouldDispatch())
-        {
-            if (down)
-                m_creator->dispatchEvent(skEventType::SK_MOUSE_PRESSED, this);
-            else
-                m_creator->dispatchEvent(skEventType::SK_MOUSE_RELEASED, this);
-        }
+        __notifyButton(button, MOUSE_STATE(message));
         break;
     }
     case WM_MOUSEMOVE:
-        m_mouse->x.abs = LOWORD(lParam);
-        m_mouse->y.abs = HIWORD(lParam);
-
-        if (!m_init)
-        {
-            m_init = true;
-            m_lx   = m_mouse->x.abs;
-            m_ly   = m_mouse->y.abs;
-        }
-        m_mouse->x.rel = m_mouse->x.abs - m_lx;
-        m_mouse->y.rel = m_mouse->y.abs - m_ly;
-
-        m_lx = m_mouse->x.abs;
-        m_ly = m_mouse->y.abs;
-
-        if (m_creator->getContext()->shouldDispatch())
-            m_creator->dispatchEvent(skEventType::SK_MOUSE_MOVED, this);
-
+        __notifyMotion(LOWORD(lParam), HIWORD(lParam));
         break;
     case WM_MOUSEWHEEL:
-
-        m_pz = GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? 120 : -120;
-
-        m_mouse->z.abs = m_pz;
-        m_mouse->z.rel = m_pz > 0 ? 1 : -1;
-
-        if (m_creator->getContext()->shouldDispatch())
-            m_creator->dispatchEvent(skEventType::SK_MOUSE_WHEEL, this);
+        __notifyWheel(GET_WHEEL_DELTA_WPARAM(wParam));
         break;
     default:
         break;
     }
 }
 
-void skWindowWin32::handleKey(SKuint32 msg, SKuintPtr wParam)
+void skWindowWin32::handleKey(const SKuint32& message, const SKuintPtr& wParam) const
 {
-    const SKint32 sc = (int)getScanCode(wParam);
-    if (sc <= KC_NONE || sc >= KC_MAX)
+    const SKint32 key = (int)getScanCode(wParam);
+    if (key <= KC_NONE || key >= KC_MAX)
         return;
 
-    const bool keyRel = msg == WM_SYSKEYUP || msg == WM_KEYUP;
-
-    SKkeyTable& keys = m_keyboard->getTable();
-
-    if (getContext()->shouldDispatch())
-    {
-        if (keyRel)
-        {
-            // indicate that it was pressed
-            keys[sc] = WM_PRESSED;
-            m_creator->dispatchEvent(skEventType::SK_KEY_RELEASED, this);
-
-            keys[sc]        = WM_RELEASED;
-        }
-        else
-        {
-            keys[sc] = WM_PRESSED;
-            m_creator->dispatchEvent(skEventType::SK_KEY_PRESSED, this);
-        }
-    }
-    else
-        keys[sc] = keyRel ? WM_RELEASED : WM_PRESSED;
+    __notifyKey(key, KEY_STATE(message));
 }
 
 void skWindowWin32::sizedChanged(SKuintPtr lParam)
@@ -336,7 +255,7 @@ void skWindowWin32::sizedChanged(SKuintPtr lParam)
     m_height = HIWORD(lParam);
 }
 
-int skWindowWin32::getScanCode(SKuintPtr wParam)
+SKint32 skWindowWin32::getScanCode(const SKuintPtr& wParam)
 {
     if (wParam >= 'A' && wParam <= 'Z')
         return KC_A + ((int)wParam - 'A');
@@ -404,5 +323,5 @@ int skWindowWin32::getScanCode(SKuintPtr wParam)
     default:
         break;
     }
-    return KC_NONE;
+    return KC_MAX;
 }

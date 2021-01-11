@@ -23,7 +23,6 @@
 #define _skWindowManagerContext_h_
 
 #include <X11/Xlib.h>
-
 #include "Utils/skString.h"
 #include "Window/X11/skWindowStubs.h"
 #include "Window/skWindowContext.h"
@@ -45,22 +44,9 @@ private:
         return m_display;
     }
 
-    static SKint32 getScanCode(SKuint32 code);
-    
-
-public:
-    explicit skWindowContextX11(skWindowManager* owner);
-    virtual ~skWindowContextX11();
-
-    void initialize(void) override;
-    void processInteractive(bool dispatch = false) override;
-    void process(void) override;
-
-private:
     skWindow* extractWindowFromEvent(XEvent& evt) const;
 
     void processMessage(skWindow* win, XEvent& evt) const;
-
     void handleConfigure(XEvent& evt, skWindowX11* win) const;
     void handleExpose(XEvent& evt, skWindowX11* win) const;
     void handleDestroy(XEvent& evt, skWindowX11* win) const;
@@ -70,7 +56,14 @@ private:
     void handleClient(XEvent& evt, skWindowX11* win) const;
 
 
-    static void handleMetaModifier(SKkeyTable& table, SKint32 scanCode, SKuint8 state);
+
+public:
+    explicit skWindowContextX11(skWindowManager* owner);
+    virtual ~skWindowContextX11();
+
+    void initialize(void) override;
+    void processInteractive(bool dispatch = false) override;
+    void process(void) override;
 };
 
 #endif  //_skWindowManagerContext_h_

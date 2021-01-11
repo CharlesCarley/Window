@@ -36,6 +36,10 @@ class skKeyboard
 private:
     SKkeyTable m_table;
 
+    friend class skWindow;
+
+    void notifyKey(const SKint32& key, const SKuint8& state);
+
 public:
     skKeyboard();
     ~skKeyboard() = default;

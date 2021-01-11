@@ -28,7 +28,7 @@
 #include "Window/skWindowContext.h"
 #include "Window/skWindowTypes.h"
 
-class skWindowManagerContextSDL final : public skWindowContext
+class skWindowContextSDL final : public skWindowContext
 {
 private:
     bool m_capture;
@@ -38,10 +38,8 @@ private:
     void handleKeyEvent(SDL_Event& evt) const;
     void handleMouseEvent(SDL_Event& evt) const;
 
-    static void setKeyTable(SKkeyTable& table, SKint32 code, SKuint8 pressed);
-
 public:
-    explicit skWindowManagerContextSDL(skWindowManager* owner);
+    explicit skWindowContextSDL(skWindowManager* owner);
 
     void finalize(void) override;
     void initialize(void) override;

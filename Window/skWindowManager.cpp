@@ -39,7 +39,7 @@
 
 #ifdef WITH_SDL
 #define skPlatformWindowSDL skWindowSDL
-#define skPlatformContextSDL skWindowManagerContextSDL
+#define skPlatformContextSDL skWindowContextSDL
 #else
 
 #define skPlatformWindowSDL skWindowWin32
@@ -55,7 +55,7 @@
 
 #ifdef WITH_SDL
 #define skPlatformWindowSDL skWindowSDL
-#define skPlatformContextSDL skWindowManagerContextSDL
+#define skPlatformContextSDL skWindowContextSDL
 #else
 
 #define skPlatformWindowSDL skWindowX11
@@ -67,9 +67,9 @@
 
 #ifdef WITH_SDL
 #define skPlatformWindow skWindowSDL
-#define skWindowContextPlat skWindowManagerContextSDL
+#define skWindowContextPlat skWindowContextSDL
 #define skPlatformWindowSDL skWindowSDL
-#define skPlatformContextSDL skWindowManagerContextSDL
+#define skPlatformContextSDL skWindowContextSDL
 #else
 #error "Backend not supported"
 #endif
@@ -218,7 +218,10 @@ void skWindowManager::destroyAll()
     m_winDirty = true;
 }
 
-skWindow* skWindowManager::create(const char* title, const SKuint32 width, const SKuint32 height, const SKuint32 flags)
+skWindow* skWindowManager::create(const char*    title,
+                                  const SKuint32 width,
+                                  const SKuint32 height,
+                                  const SKuint32 flags)
 {
     skWindow* window = createWindowInstance();
     window->create(title, width, height, flags);
@@ -252,7 +255,7 @@ void skWindowManager::dispatchEvent(const skEventType& event, skWindow* window)
         it.getNext()->handle(event, window);
 }
 
-void skWindowManager::broadcastEvent(const skEventType& evt)
+void skWindowManager::broadcastEvent(const skEventType& event)
 {
     if (m_handlers.empty())
         return;
@@ -264,7 +267,7 @@ void skWindowManager::broadcastEvent(const skEventType& evt)
 
         WindowHash::Iterator wit = m_windows.iterator();
         while (wit.hasMoreElements())
-            hand->handle(evt, wit.getNext().second);
+            hand->handle(event, wit.getNext().second);
     }
 }
 

@@ -57,3 +57,29 @@ void skWindow::initialize()
             m_context = m_creator->getContext();
     }
 }
+
+
+void skWindow::__notifyMotion(const SKint32& xPos, const SKint32& yPos) const
+{
+    if (m_mouse)
+        m_mouse->notifyMotion(xPos, yPos);
+}
+
+void skWindow::__notifyWheel(const SKint32& zDelta) const
+{
+    if (m_mouse)
+        m_mouse->notifyWheel(zDelta);
+}
+
+void skWindow::__notifyButton(const SKint32& button, const SKuint8& state) const
+{
+    if (m_mouse)
+        m_mouse->notifyButton(button, state);
+}
+
+
+void skWindow::__notifyKey(const SKint32& key, const SKuint8& state) const
+{
+    if (m_keyboard)
+        m_keyboard->notifyKey(key, state);
+}

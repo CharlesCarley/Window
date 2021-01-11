@@ -47,6 +47,14 @@ private:
     void handleSize(skWindowWin32* window, SKuintPtr lParam) const;
     void handleClose(skWindowWin32* window) const;
 
+    void handleMouse(skWindowWin32* window,
+                     SKuint32       message,
+                     SKuintPtr      wParam,
+                     SKuintPtr      lParam) const;
+    void handleKey(skWindowWin32* window,
+                   SKuint32       message,
+                   SKuintPtr      wParam) const;
+
 public:
     explicit skWindowContextWin32(skWindowManager* owner);
     ~skWindowContextWin32() override;

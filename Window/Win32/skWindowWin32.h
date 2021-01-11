@@ -38,12 +38,18 @@ private:
     HDC      m_dc;
     HGLRC    m_glRC;
 
-    static int getScanCode(SKuintPtr wParam);
-    void       setupOpenGL(void);
+    static SKint32 getScanCode(const SKuintPtr& wParam);
+
+    void setupOpenGL(void);
 
     void invalidate() const;
     void validate() const;
     void makeCurrent() const;
+
+    void sizedChanged(SKuintPtr lParam);
+
+    void handleKey(const SKuint32& message, const SKuintPtr& wParam) const;
+    void handleMouse(const SKuint32& message, const SKuintPtr& wParam, const SKuintPtr& lParam) const;
 
 public:
     skWindowWin32(skWindowManager* creator);
@@ -62,10 +68,6 @@ public:
     {
         return m_hWnd ? (SKsize)(void*)m_hWnd : SK_NPOS;
     }
-
-    void sizedChanged(SKuintPtr lParam);
-    void handleKey(SKuint32 msg, SKuintPtr wParam);
-    void handleMouse(SKuint32 msg, SKuintPtr wParam, SKuintPtr lParam);
 };
 
 #endif  //_skWindowWin32_h_

@@ -146,7 +146,7 @@ public:
 
     int run()
     {
-        m_manager = new skWindowManager(skContextType::WM_CTX_SDL);
+        m_manager = new skWindowManager(skContextType::WM_CTX_PLATFORM);
         m_manager->addHandler(this);
 
         m_window = m_manager->create("Test",

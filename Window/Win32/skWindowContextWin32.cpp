@@ -162,6 +162,7 @@ void skWindowContextWin32::invalidateWindows()
 void skWindowContextWin32::handleSize(skWindowWin32* window, SKuintPtr lParam) const
 {
     window->sizedChanged(lParam);
+
     if (shouldDispatch())
         m_creator->dispatchEvent(skEventType::SK_WIN_SIZE, window);
 }
@@ -185,6 +186,63 @@ void skWindowContextWin32::handleClose(skWindowWin32* window) const
     m_creator->destroy(window);
 }
 
+void skWindowContextWin32::handleMouse(skWindowWin32* window,
+                                       SKuint32       message,
+                                       SKuintPtr      wParam,
+                                       SKuintPtr      lParam) const
+{
+    window->handleMouse(message, wParam, lParam);
+
+    if (shouldDispatch())
+    {
+        switch (message)
+        {
+        case WM_LBUTTONDOWN:
+        case WM_MBUTTONDOWN:
+        case WM_RBUTTONDOWN:
+            m_creator->dispatchEvent(skEventType::SK_MOUSE_PRESSED, window);
+            break;
+        case WM_LBUTTONUP:
+        case WM_MBUTTONUP:
+        case WM_RBUTTONUP:
+            m_creator->dispatchEvent(skEventType::SK_MOUSE_RELEASED, window);
+            break;
+        case WM_MOUSEWHEEL:
+            m_creator->dispatchEvent(skEventType::SK_MOUSE_WHEEL, window);
+            break;
+        case WM_MOUSEMOVE:
+            m_creator->dispatchEvent(skEventType::SK_MOUSE_MOVED, window);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+void skWindowContextWin32::handleKey(skWindowWin32* window,
+                                     SKuint32       message,
+                                     SKuintPtr      wParam) const
+{
+    window->handleKey(message, wParam);
+
+    if (shouldDispatch())
+    {
+        switch (message)
+        {
+        case WM_SYSKEYUP:
+        case WM_KEYUP:
+            m_creator->dispatchEvent(skEventType::SK_KEY_RELEASED, window);
+            break;
+        case WM_SYSKEYDOWN:
+        case WM_KEYDOWN:
+            m_creator->dispatchEvent(skEventType::SK_KEY_PRESSED, window);
+            break;
+        default:
+            break;
+        }        
+    }
+}
+
 SKintPtr skWindowContextWin32::handleProcedure(skWindowWin32*  window,
                                                const SKuint32  message,
                                                const SKuintPtr wParam,
@@ -203,7 +261,7 @@ SKintPtr skWindowContextWin32::handleProcedure(skWindowWin32*  window,
     case WM_KEYUP:
     case WM_SYSKEYDOWN:
     case WM_KEYDOWN:
-        window->handleKey(message, wParam);
+        handleKey(window, message, wParam);
         return 0;
     case WM_LBUTTONDOWN:
     case WM_MBUTTONDOWN:
@@ -213,7 +271,7 @@ SKintPtr skWindowContextWin32::handleProcedure(skWindowWin32*  window,
     case WM_RBUTTONUP:
     case WM_MOUSEMOVE:
     case WM_MOUSEWHEEL:
-        window->handleMouse(message, wParam, lParam);
+        handleMouse(window, message, wParam, lParam);
         return 0;
     case WM_PAINT:
         handlePaint(window);

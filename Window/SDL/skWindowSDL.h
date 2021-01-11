@@ -26,7 +26,7 @@
 #include <SDL.h>
 #include "Window/skWindow.h"
 #include "Window/skWindowTypes.h"
-struct SDL_Window;
+
 
 class skWindowSDL final : public skWindow
 {
@@ -35,7 +35,15 @@ private:
     SDL_Window*   m_window;
     SDL_GLContext m_glc;
 
-    friend class skWindowManagerContextSDL;
+    friend class skWindowContextSDL;
+
+    static SKint32 getScanCode(const SKint32& keySym);
+
+    void handleKey(const SDL_KeyboardEvent& evt) const;
+    void handleMouseButton(const SDL_MouseButtonEvent& evt) const;
+    void handleMouseMotion(const SDL_MouseMotionEvent& evt) const;
+    void handleMouseWheel(const SDL_MouseWheelEvent& evt) const;
+
 
     void notifySizeChange(SKuint32 w, SKuint32 h);
 

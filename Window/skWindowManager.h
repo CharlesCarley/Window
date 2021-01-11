@@ -102,8 +102,18 @@ public:
 
 
 
+    /// <summary>
+    /// Sends the event and window to all registered handlers
+    /// </summary>
+    /// <param name="event">The type of event</param>
+    /// <param name="window">The window where the event took place</param>
     void dispatchEvent(const skEventType& event, skWindow* window);
-    void broadcastEvent(const skEventType& evt);
+
+    /// <summary>
+    /// Dispatches the event to all windows. 
+    /// </summary>
+    /// <param name="event">The type of event</param>
+    void broadcastEvent(const skEventType& event);
 
 
     void captureWindows(void);

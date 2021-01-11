@@ -24,7 +24,7 @@
 
 skKeyboard::skKeyboard() :
     m_table()
-    //key(KC_NONE)
+//key(KC_NONE)
 {
     skMemset(m_table, WM_RELEASED, sizeof(SKkeyTable));
 }
@@ -35,4 +35,34 @@ bool skKeyboard::isKeyDown(const SKuint32& code) const
     if (code > KC_NONE && code < KC_MAX)
         return m_table[code] == WM_PRESSED;
     return false;
+}
+
+
+void skKeyboard::notifyKey(const SKint32& key, const SKuint8& state)
+{
+    if (key > KC_NONE && key < KC_MAX)
+    {
+        m_table[key] = state;
+
+        if (key >= KC_LCTRL && key <= KC_RSHIFT)
+        {
+            switch (key)
+            {
+            case KC_LCTRL:
+            case KC_RCTRL:
+                m_table[KC_CTRL] = state;
+                break;
+            case KC_LSHIFT:
+            case KC_RSHIFT:
+                m_table[KC_SHIFT] = state;
+                break;
+            case KC_LALT:
+            case KC_RALT:
+                m_table[KC_ALT] = state;
+                break;
+            default:
+                break;
+            }
+        }
+    }
 }
