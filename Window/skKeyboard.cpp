@@ -23,8 +23,8 @@
 #include "Utils/skPlatformHeaders.h"
 
 skKeyboard::skKeyboard() :
-    m_table(),
-    count(0)
+    m_table()
+    //key(KC_NONE)
 {
     skMemset(m_table, WM_RELEASED, sizeof(SKkeyTable));
 }

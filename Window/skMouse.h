@@ -57,7 +57,6 @@ public:
 /// Button states are stored in a table holding a boolean value of its
 /// current state.
 /// Access to the instance of skMouse can be found in the skWindow class.
-/// Access to input devices is per window and for now.
 /// </summary>
 class skMouse
 {

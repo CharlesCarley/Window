@@ -30,7 +30,6 @@
 /// States are stored in a table that holds a boolean
 /// value of its current state.
 /// Access to the instance of skKeyboard can be found in the skWindow class.
-/// Access to input devices is per window and for now.
 /// </summary>
 class skKeyboard
 {
@@ -57,10 +56,12 @@ public:
     /// <summary>
     /// Counter for the number of buttons held down at any one time.
     /// </summary>
-    SKint16 count;
+    // SKint16 count;
 
-    SKint8 key;
-    SKint8 state;
+    /// <summary>
+    /// The last key code modified
+    /// </summary>
+    // SKint8 key;
 };
 
 #endif  //_skKeyboard_h_

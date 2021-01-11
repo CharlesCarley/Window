@@ -107,9 +107,6 @@ public:
             if (m_val > 1)
                 m_val = 0;
 
-            // just to keep it refreshing.
-            // normally this should be done when
-            // the render state has changed
             window->flush();
         }
         else if (event == skEventType::SK_KEY_PRESSED)

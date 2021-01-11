@@ -29,9 +29,6 @@
 #include "Window/skWindowTypes.h"
 #include "skWindowContextWin32.h"
 
-HGLRC _wglCreateContext(HDC dc);
-void  _wglDeleteContext(HGLRC rc);
-void  _wglMakeCurrent(HDC dc, HGLRC rc);
 
 skWindowWin32::skWindowWin32(skWindowManager* creator) :
     skWindow(creator),
@@ -52,7 +49,7 @@ skWindowWin32::~skWindowWin32()
         SetWindowLongPtr(m_hWnd, GWL_USER, NULL);
 
     if (m_glRC)
-        _wglDeleteContext(m_glRC);
+        wglDeleteContext(m_glRC);
 
     if (m_hWnd)
         DestroyWindow(m_hWnd);
@@ -221,7 +218,7 @@ void skWindowWin32::setupOpenGL(void)
         return;
 
     DescribePixelFormat(m_dc, iPixelFormat, sizeof pixelFormat, &pixelFormat);
-    m_glRC = _wglCreateContext(m_dc);
+    m_glRC = wglCreateContext(m_dc);
 
     makeCurrent();
     skLoadOpenGL();
@@ -231,7 +228,7 @@ void skWindowWin32::setupOpenGL(void)
 void skWindowWin32::makeCurrent() const
 {
     if (m_glRC)
-        _wglMakeCurrent(m_dc, m_glRC);
+        wglMakeCurrent(m_dc, m_glRC);
 }
 
 
@@ -249,7 +246,7 @@ void skWindowWin32::handleMouse(SKuint32 msg, SKuintPtr wParam, SKuintPtr lParam
         const bool down = msg == WM_LBUTTONDOWN ||
                           msg == WM_MBUTTONDOWN ||
                           msg == WM_RBUTTONDOWN;
-        SKmouseTable &table = m_mouse->getTable();
+        SKmouseTable& table = m_mouse->getTable();
 
 
         if (msg == WM_LBUTTONDOWN || msg == WM_LBUTTONUP)
@@ -321,7 +318,7 @@ void skWindowWin32::handleKey(SKuint32 msg, SKuintPtr wParam)
             keys[sc] = WM_PRESSED;
             m_creator->dispatchEvent(skEventType::SK_KEY_RELEASED, this);
 
-            keys[sc] = WM_RELEASED;
+            keys[sc]        = WM_RELEASED;
         }
         else
         {
@@ -342,63 +339,16 @@ void skWindowWin32::sizedChanged(SKuintPtr lParam)
 int skWindowWin32::getScanCode(SKuintPtr wParam)
 {
     if (wParam >= 'A' && wParam <= 'Z')
-    {
-        wParam -= 'A';
-        return KC_A + (int)wParam;
-    }
-
+        return KC_A + ((int)wParam - 'A');
     if (wParam >= '0' && wParam <= '9')
-    {
-        wParam -= '0';
-        return KC_0 + (int)wParam;
-    }
+        return KC_0 + ((int)wParam - '0');
+    if (wParam >= VK_F1 && wParam <= VK_F12)
+        return KC_F1 + ((int)wParam - VK_F1);
+    if (wParam >= VK_NUMPAD0 && wParam <= VK_NUMPAD9)
+        return KC_PAD0 + ((int)wParam - VK_NUMPAD0);
 
     switch (wParam)
     {
-    case VK_NUMPAD0:
-        return KC_PAD0;
-    case VK_NUMPAD1:
-        return KC_PAD1;
-    case VK_NUMPAD2:
-        return KC_PAD2;
-    case VK_NUMPAD3:
-        return KC_PAD3;
-    case VK_NUMPAD4:
-        return KC_PAD4;
-    case VK_NUMPAD5:
-        return KC_PAD5;
-    case VK_NUMPAD6:
-        return KC_PAD6;
-    case VK_NUMPAD7:
-        return KC_PAD7;
-    case VK_NUMPAD8:
-        return KC_PAD8;
-    case VK_NUMPAD9:
-        return KC_PAD9;
-    case VK_F1:
-        return KC_F1;
-    case VK_F2:
-        return KC_F2;
-    case VK_F3:
-        return KC_F3;
-    case VK_F4:
-        return KC_F4;
-    case VK_F5:
-        return KC_F5;
-    case VK_F6:
-        return KC_F6;
-    case VK_F7:
-        return KC_F7;
-    case VK_F8:
-        return KC_F8;
-    case VK_F9:
-        return KC_F9;
-    case VK_F10:
-        return KC_F10;
-    case VK_F11:
-        return KC_F11;
-    case VK_F12:
-        return KC_F12;
     case VK_RCONTROL:
         return KC_RCTRL;
     case VK_LCONTROL:
@@ -456,35 +406,3 @@ int skWindowWin32::getScanCode(SKuintPtr wParam)
     }
     return KC_NONE;
 }
-
-#ifndef SID_GLES
-HGLRC _wglCreateContext(HDC dc)
-{
-    return wglCreateContext(dc);
-}
-
-void _wglDeleteContext(HGLRC rc)
-{
-    wglDeleteContext(rc);
-}
-
-void _wglMakeCurrent(HDC dc, HGLRC rc)
-{
-    wglMakeCurrent(dc, rc);
-}
-
-#else
-
-HGLRC _wglCreateContext(HDC dc)
-{
-    return NULL;
-}
-
-void _wglDeleteContext(HGLRC rc)
-{
-}
-
-void _wglMakeCurrent(HDC dc, HGLRC rc)
-{
-}
-#endif

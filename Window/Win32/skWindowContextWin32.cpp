@@ -53,7 +53,7 @@ public:
     {
         // watch it, this value may be null until it is set
         // after creation. SystemProc gets event callbacks after
-        // registration below
+        // registration happens below.
         const LONG_PTR pointer = ::GetWindowLongPtr(hWnd, GWL_USER);
         if (pointer)
             return (skWindowWin32*)pointer;
@@ -121,7 +121,6 @@ void skWindowContextWin32::process(void)
 
     if (!m_refresh.empty())
         invalidateWindows();
-
 }
 
 void skWindowContextWin32::processInteractive(bool dispatch)
