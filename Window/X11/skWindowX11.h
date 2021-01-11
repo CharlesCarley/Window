@@ -26,7 +26,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include "Utils/skString.h"
-#include "Window/X11/skWindowStubs.h"
 #include "Window/skWindow.h"
 #include "Window/skWindowTypes.h"
 class skWindowContextX11;

@@ -69,28 +69,11 @@ set(Window_SRC
 
 if (WIN32)
 
-    set(Window_PLAT_SRC_NO_COMPILE 
-        X11/skWindowX11.h
-        X11/skWindowContextX11.h
-        X11/skWindowX11.cpp
-        X11/skWindowContextX11.cpp
-    )
-
-    set_source_files_properties(${Window_PLAT_SRC_NO_COMPILE} 
-        PROPERTIES 
-        VS_TOOL_OVERRIDE 
-        "None")
-    set_source_files_properties(${Window_PLAT_SRC_NO_COMPILE} 
-        PROPERTIES 
-        HEADER_FILE_ONLY 
-        TRUE)
-
     set(Window_PLAT_SRC 
         Win32/skWindowWin32.h
         Win32/skWindowContextWin32.h
         Win32/skWindowWin32.cpp
         Win32/skWindowContextWin32.cpp
-        ${Window_PLAT_SRC_NO_COMPILE}
     )
 
 elseif (UNIX)

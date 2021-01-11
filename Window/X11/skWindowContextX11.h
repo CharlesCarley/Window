@@ -23,10 +23,15 @@
 #define _skWindowManagerContext_h_
 
 #include <X11/Xlib.h>
-#include "Utils/skString.h"
-#include "Window/X11/skWindowStubs.h"
 #include "Window/skWindowContext.h"
 #include "Window/skWindowTypes.h"
+
+#define MessageFormatByte 8
+#define MessageFormatShort 16
+#define MessageFormatLong 32
+#define XNullWindow -1
+
+
 
 class skWindowX11;
 
