@@ -29,8 +29,18 @@ endif()
 
 
 
-set(Window_PLIB ${OPENGL_LIBRARY} ${SDL_LIBRARY})
-set(Window_PINC ${SDL_INCLUDE})
+set(Window_PLIB ${OPENGL_LIBRARY} ${Utils_LIBRARY} )
+set(Window_PINC ${Utils_INCLUDE})
+set(Window_PDEF )
+
+
+if (Window_WITH_SDL)
+    list(APPEND Window_PLIB ${SDL_LIBRARY})
+    list(APPEND Window_PINC ${SDL_INCLUDE})
+    list(APPEND Window_PDEF -DWITH_SDL)
+endif()
+
+
 
 set(Window_HDR
     skWindow.h
@@ -66,7 +76,6 @@ if (WIN32)
         Win32/skWindowContextWin32.h
         Win32/skWindowWin32.cpp
         Win32/skWindowContextWin32.cpp
-        ${TMP_DEV_SRC}
     )
 
 elseif (UNIX)
@@ -87,21 +96,20 @@ elseif (UNIX)
 endif()
 
 
-set(WindowSDL_PHDR
-    SDL/skWindowSDL.h
-    SDL/skWindowContextSDL.h
-)
+if (Window_WITH_SDL)
+    set(WindowSDL_PHDR
+        SDL/skWindowSDL.h
+        SDL/skWindowContextSDL.h
+    )
+    set(WindowSDL_PSRC
+        SDL/skWindowSDL.cpp
+        SDL/skWindowContextSDL.cpp
+    )
+    list(APPEND Window_PLAT_SRC ${WindowSDL_PHDR} ${WindowSDL_PSRC})
+endif()
 
-set(WindowSDL_PSRC
-    SDL/skWindowSDL.cpp
-    SDL/skWindowContextSDL.cpp
-)
-
-list(APPEND Window_PLAT_SRC ${WindowSDL_PHDR} ${WindowSDL_PSRC})
-
-
-include_directories(.. . ${Window_PINC} ${Utils_INCLUDE} )
-
+include_directories(.. . ${Window_PINC})
+add_definitions(${Window_PDEF})
 
 add_library(
     ${TargetName}
@@ -112,7 +120,6 @@ add_library(
 
 target_link_libraries(
     ${TargetName} 
-    Utils 
     ${Window_PLIB}
 )
 

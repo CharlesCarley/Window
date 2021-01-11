@@ -19,6 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------
 */
+#ifdef WITH_SDL
+
 #ifndef _skWindowManagerContextSDL_h_
 #define _skWindowManagerContextSDL_h_
 
@@ -48,4 +50,5 @@ public:
     void process(void) override;
 };
 
+#endif
 #endif  //_skWindowManagerContextSDL_h_

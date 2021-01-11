@@ -18,7 +18,6 @@
 # 3. This notice may not be removed or altered from any source distribution.
 # ------------------------------------------------------------------------------
 subdirs(Utils)
-
-set(SDL_FOLDER "Extern")
-subdirs(SDL)
-
+if (Window_WITH_SDL)
+    subdirs(SDL)
+endif()

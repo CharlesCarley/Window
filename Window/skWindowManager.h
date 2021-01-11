@@ -49,7 +49,7 @@ private:
     skWindow*        createWindowInstance();
 
 public:
-    explicit skWindowManager(skContextType type = skContextType::WM_CTX_SDL);
+    explicit skWindowManager(skContextType type = skContextType::WM_CTX_PLATFORM);
     ~skWindowManager();
 
     /// <summary>

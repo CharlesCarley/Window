@@ -19,6 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------
 */
+#ifdef WITH_SDL
 #ifndef _skWindowSDL_h_
 #define _skWindowSDL_h_
 
@@ -54,4 +55,5 @@ public:
     }
 };
 
+#endif  //WITH_SDL
 #endif  //_skWindowSDL_h_

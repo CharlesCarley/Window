@@ -37,18 +37,42 @@
 #define skPlatformWindow skWindowWin32
 #define skWindowContextPlat skWindowContextWin32
 
+#ifdef WITH_SDL
+#define skPlatformWindowSDL skWindowSDL
+#define skPlatformContextSDL skWindowManagerContextSDL
+#else
+
+#define skPlatformWindowSDL skWindowWin32
+#define skPlatformContextSDL skWindowContextWin32
+#endif
+
 #elif SK_PLATFORM == SK_PLATFORM_LINUX
 #include "X11/skWindowContextX11.h"
 #include "X11/skWindowX11.h"
 
 #define skPlatformWindow skWindowX11
 #define skWindowContextPlat skWindowContextX11
+
+#ifdef WITH_SDL
+#define skPlatformWindowSDL skWindowSDL
+#define skPlatformContextSDL skWindowManagerContextSDL
 #else
 
-// not implemented / tested yet
+#define skPlatformWindowSDL skWindowX11
+#define skPlatformContextSDL skWindowContextX11
+#endif
 
+#else
+
+
+#ifdef WITH_SDL
 #define skPlatformWindow skWindowSDL
-#define skWindowContextPlat skWindowContextSDL
+#define skWindowContextPlat skWindowManagerContextSDL
+#define skPlatformWindowSDL skWindowSDL
+#define skPlatformContextSDL skWindowManagerContextSDL
+#else
+#error "Backend not supported"
+#endif
 
 #endif
 
@@ -94,7 +118,7 @@ skWindowContext* skWindowManager::createContextInstance()
     }
     else
     {
-        context = new skWindowManagerContextSDL(this);
+        context = new skPlatformContextSDL(this);
         context->initialize();
     }
     return context;
@@ -109,7 +133,7 @@ skWindow* skWindowManager::createWindowInstance()
     else if (m_contextType == skContextType::WM_CTX_PLATFORM)
         window = new skPlatformWindow(this);
     else
-        window = new skWindowSDL(this);
+        window = new skPlatformWindowSDL(this);
     return window;
 }
 
