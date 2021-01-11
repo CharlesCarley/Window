@@ -31,7 +31,9 @@ public:
     skWindowManagerContextInject(skWindowManager* owner);
 
     void initialize(void) override;
+
     void processInteractive(bool dispatch = false) override;
+
     void process(void) override;
 };
 

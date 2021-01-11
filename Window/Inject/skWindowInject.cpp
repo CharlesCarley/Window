@@ -47,7 +47,3 @@ void skWindowInject::show(bool v)
 void skWindowInject::flush(void)
 {
 }
-
-void skWindowInject::capture(void)
-{
-}

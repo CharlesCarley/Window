@@ -70,15 +70,19 @@ public:
             break;
         case skEventType::SK_KEY_PRESSED:
             skLogf(LD_INFO, "SK_KEY_PRESSED\n");
+            skLogf(LD_WARN, " %s\n", skKeyboard::toString(window->getKeyboardRef().key));
             break;
         case skEventType::SK_KEY_RELEASED:
             skLogf(LD_INFO, "SK_KEY_RELEASED\n");
+            skLogf(LD_WARN, " %s\n", skKeyboard::toString(window->getKeyboardRef().key));
             break;
         case skEventType::SK_MOUSE_PRESSED:
             skLogf(LD_INFO, "SK_MOUSE_CLICKED\n");
+            skLogf(LD_WARN, " %s\n", skMouse::toString(window->getMouseRef().button));
             break;
         case skEventType::SK_MOUSE_RELEASED:
             skLogf(LD_INFO, "SK_MOUSE_RELEASED\n");
+            skLogf(LD_WARN, " %s\n", skMouse::toString(window->getMouseRef().button));
             break;
         case skEventType::SK_MOUSE_WHEEL:
             skLogf(LD_INFO, "SK_MOUSE_WHEEL\n");
@@ -146,7 +150,7 @@ public:
 
     int run()
     {
-        m_manager = new skWindowManager(skContextType::WM_CTX_PLATFORM);
+        m_manager = new skWindowManager(skContextType::WM_CTX_SDL);
         m_manager->addHandler(this);
 
         m_window = m_manager->create("Test",

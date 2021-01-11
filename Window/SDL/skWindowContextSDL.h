@@ -31,20 +31,23 @@
 class skWindowContextSDL final : public skWindowContext
 {
 private:
-    bool m_capture;
-
     void handleEvent(SDL_Event& evt);
+
     void handleWindowEvent(SDL_Event& evt);
+
     void handleKeyEvent(SDL_Event& evt) const;
+
     void handleMouseEvent(SDL_Event& evt) const;
 
 public:
     explicit skWindowContextSDL(skWindowManager* owner);
 
     void finalize(void) override;
+
     void initialize(void) override;
 
     void processInteractive(bool dispatch = false) override;
+
     void process(void) override;
 };
 

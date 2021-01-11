@@ -33,7 +33,7 @@ class skWindowX11;
 class skWindowContextX11 final : public skWindowContext
 {
 private:
-    Display*         m_display{};
+    Display*         m_display;
     skWindowManager* m_creator;
     Atom             m_deleteAtom;
 
@@ -47,22 +47,30 @@ private:
     skWindow* extractWindowFromEvent(XEvent& evt) const;
 
     void processMessage(skWindow* win, XEvent& evt) const;
+
     void handleConfigure(XEvent& evt, skWindowX11* win) const;
+
     void handleExpose(XEvent& evt, skWindowX11* win) const;
+
     void handleDestroy(XEvent& evt, skWindowX11* win) const;
+
     void handleMotion(XEvent& evt, skWindowX11* win) const;
+
     void handleButton(XEvent& evt, skWindowX11* win) const;
+
     void handleKey(XEvent& evt, skWindowX11* win) const;
+
     void handleClient(XEvent& evt, skWindowX11* win) const;
-
-
 
 public:
     explicit skWindowContextX11(skWindowManager* owner);
+
     virtual ~skWindowContextX11();
 
     void initialize(void) override;
+
     void processInteractive(bool dispatch = false) override;
+
     void process(void) override;
 };
 

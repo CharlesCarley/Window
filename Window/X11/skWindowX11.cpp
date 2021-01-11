@@ -294,9 +294,6 @@ void skWindowX11::flush(void)
     m_dirty = false;
 }
 
-void skWindowX11::capture(void)
-{
-}
 
 void skWindowX11::notifySize(SKuint32 w, SKuint32 h)
 {
@@ -321,8 +318,7 @@ void skWindowX11::handleButton(const XButtonEvent& event) const
     else if (event.button == 3)
         button = MBT_R;
 
-    if (button != MBT_None)
-        __notifyButton(button, event.type == ButtonPress ? WM_PRESSED : WM_RELEASED);
+    __notifyButton(button, event.type == ButtonPress ? WM_PRESSED : WM_RELEASED);
 }
 
 void skWindowX11::handleWheel(const XButtonEvent& event) const
@@ -335,9 +331,6 @@ void skWindowX11::handleWheel(const XButtonEvent& event) const
 void skWindowX11::handleKey(XEvent& event) const
 {
     const SKint32 code = getScanCode(XLookupKeysym(&event.xkey, 0));
-
-    if (code <= KC_NONE || code >= KC_MAX)
-        return;
 
     __notifyKey(code, event.xkey.type == KeyPress ? WM_PRESSED : WM_RELEASED);
 }

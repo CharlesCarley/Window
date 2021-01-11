@@ -36,7 +36,6 @@
                          ? WM_PRESSED                            \
                          : WM_RELEASED
 
-
 skWindowWin32::skWindowWin32(skWindowManager* creator) :
     skWindow(creator),
     m_pz(0),
@@ -74,7 +73,6 @@ void skWindowWin32::create(const char* title, SKuint32 width, SKuint32 height, S
         winStyle |= WS_MAXIMIZE;
 
     SKuint32 xPos = 0, yPos = 0;
-
 
     if (flags & WM_WF_CENTER)
     {
@@ -162,10 +160,6 @@ void skWindowWin32::flush(void)
         SwapBuffers(m_dc);
 }
 
-void skWindowWin32::capture(void)
-{
-}
-
 void skWindowWin32::setupOpenGL(void)
 {
     PIXELFORMATDESCRIPTOR pixelFormat = {};
@@ -195,13 +189,11 @@ void skWindowWin32::setupOpenGL(void)
     skLoadOpenGL();
 }
 
-
 void skWindowWin32::makeCurrent() const
 {
     if (m_glRC)
         wglMakeCurrent(m_dc, m_glRC);
 }
-
 
 void skWindowWin32::handleMouse(const SKuint32&  message,
                                 const SKuintPtr& wParam,
@@ -243,9 +235,6 @@ void skWindowWin32::handleMouse(const SKuint32&  message,
 void skWindowWin32::handleKey(const SKuint32& message, const SKuintPtr& wParam) const
 {
     const SKint32 key = (int)getScanCode(wParam);
-    if (key <= KC_NONE || key >= KC_MAX)
-        return;
-
     __notifyKey(key, KEY_STATE(message));
 }
 

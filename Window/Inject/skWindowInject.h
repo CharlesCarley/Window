@@ -25,7 +25,7 @@
 #include "Window/skWindow.h"
 #include "Window/skWindowTypes.h"
 
-class skWindowInject: public skWindow
+class skWindowInject : public skWindow
 {
 public:
     skWindowInject(skWindowManager* creator);
@@ -38,8 +38,6 @@ public:
     void show(bool v) override;
 
     void flush(void) override;
-
-    void capture(void) override;
 
     SKsize getWindowHandle(void) override
     {

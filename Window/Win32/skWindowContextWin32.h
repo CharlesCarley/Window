@@ -22,12 +22,12 @@
 #ifndef _skWindowContextWin32_h_
 #define _skWindowContextWin32_h_
 
+#include "Utils/skArray.h"
 #include "Window/skWindowContext.h"
 #include "Window/skWindowTypes.h"
 class skWindowWin32;
 
 #define SK_WINDOW_CLASS_NAME "skWindowContextWin32"
-
 
 class skWindowContextWin32 final : public skWindowContext
 {
@@ -36,31 +36,37 @@ private:
 
     typedef skArray<skWindowWin32*> WindowArray;
 
-    bool        m_capture;
     WindowArray m_refresh;
     SKuintPtr   m_module;
 
     void queueRefreshWindow(skWindowWin32*);
+
     void invalidateWindows();
 
     void handlePaint(skWindowWin32* window) const;
+
     void handleSize(skWindowWin32* window, SKuintPtr lParam) const;
+
     void handleClose(skWindowWin32* window) const;
 
     void handleMouse(skWindowWin32* window,
                      SKuint32       message,
                      SKuintPtr      wParam,
                      SKuintPtr      lParam) const;
+
     void handleKey(skWindowWin32* window,
                    SKuint32       message,
                    SKuintPtr      wParam) const;
 
 public:
     explicit skWindowContextWin32(skWindowManager* owner);
+
     ~skWindowContextWin32() override;
 
     void initialize(void) override;
+
     void processInteractive(bool dispatch = false) override;
+
     void process(void) override;
 
     SKintPtr handleProcedure(skWindowWin32* window,

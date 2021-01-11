@@ -295,4 +295,16 @@ enum class skEventType
 /// </summary>
 const SKint32 skWheelDelta = 120;
 
+#define SWITCH_TO_STRING_BEGIN(code, def) \
+    switch (code)                         \
+    {                                     \
+    default:                              \
+        return #def
+
+#define SWITCH_TO_STRING_END() }
+
+#define CASE_TO_STRING(v) \
+    case v:               \
+        return #v
+
 #endif  //_skWindowEnums_h_

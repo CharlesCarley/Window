@@ -38,7 +38,6 @@ protected:
 
     friend class skWindowManager;
 
-
     void __notifyMotion(const SKint32& xPos, const SKint32& yPos) const;
 
     void __notifyWheel(const SKint32& zDelta) const;
@@ -66,8 +65,6 @@ protected:
 private:
     void initialize();
 
-
-
 public:
     virtual ~skWindow();
 
@@ -90,12 +87,6 @@ public:
     /// <returns>Returns a pointer to the underlying window system window handle.</returns>
     virtual SKsize getWindowHandle(void) = 0;
 
-    /// <summary>
-    ///
-    /// </summary>
-    virtual void capture(void) = 0;
-
-
     /// <returns>Returns the manager that created this window.</returns>
     skWindowManager* getCreator(void) const
     {
@@ -107,7 +98,6 @@ public:
     {
         return m_context;
     }
-
 
     /// <returns>Returns a pointer to the keyboard device</returns>
     skKeyboard* getKeyboard(void) const
@@ -134,7 +124,6 @@ public:
         SK_ASSERT(m_mouse);
         return *m_mouse;
     }
-
 
     /// <returns>Returns the width of the window in pixels</returns>
     SKuint32 getWidth(void) const

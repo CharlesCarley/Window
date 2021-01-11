@@ -43,12 +43,15 @@ private:
     void setupOpenGL(void);
 
     void invalidate() const;
+
     void validate() const;
+
     void makeCurrent() const;
 
     void sizedChanged(SKuintPtr lParam);
 
     void handleKey(const SKuint32& message, const SKuintPtr& wParam) const;
+
     void handleMouse(const SKuint32& message, const SKuintPtr& wParam, const SKuintPtr& lParam) const;
 
 public:
@@ -61,8 +64,8 @@ public:
     void refresh(void) override;
 
     void show(bool doShow) override;
+
     void flush(void) override;
-    void capture(void) override;
 
     SKsize getWindowHandle(void) override
     {

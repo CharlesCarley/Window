@@ -57,7 +57,6 @@ void skWindowSDL::create(const char* title, SKuint32 w, SKuint32 h, SKuint32 fla
         yPos = SDL_WINDOWPOS_CENTERED;
     }
 
-
     if (!(flags & WM_WF_DIALOG))
         windowFlags |= SDL_WINDOW_RESIZABLE;
 
@@ -66,7 +65,6 @@ void skWindowSDL::create(const char* title, SKuint32 w, SKuint32 h, SKuint32 fla
 
     m_width  = w;
     m_height = h;
-
 
     m_window = SDL_CreateWindow(title,
                                 xPos,
@@ -119,23 +117,15 @@ void skWindowSDL::flush(void)
         SDL_GL_SwapWindow(m_window);
 }
 
-void skWindowSDL::capture(void)
-{
-}
-
 void skWindowSDL::notifySizeChange(SKuint32 w, SKuint32 h)
 {
     m_width  = w;
     m_height = h;
 }
 
-
 void skWindowSDL::handleKey(const SDL_KeyboardEvent& evt) const
 {
     const SKuint32 code = getScanCode(evt.keysym.sym);
-    if (code <= KC_NONE || code >= KC_MAX)
-        return;
-
     __notifyKey(code, evt.type == SDL_KEYDOWN ? WM_PRESSED : WM_RELEASED);
 }
 
@@ -151,11 +141,8 @@ void skWindowSDL::handleMouseButton(const SDL_MouseButtonEvent& evt) const
     else if (evt.button == SDL_BUTTON_RIGHT)
         btn = MBT_R;
 
-
-    if (btn != MBT_None)
-        __notifyButton(btn, evt.type == SDL_MOUSEBUTTONDOWN ? WM_PRESSED : WM_RELEASED);
+    __notifyButton(btn, evt.type == SDL_MOUSEBUTTONDOWN ? WM_PRESSED : WM_RELEASED);
 }
-
 
 void skWindowSDL::handleMouseMotion(const SDL_MouseMotionEvent& evt) const
 {
@@ -166,7 +153,6 @@ void skWindowSDL::handleMouseWheel(const SDL_MouseWheelEvent& evt) const
 {
     __notifyWheel(evt.y);
 }
-
 
 SKint32 skWindowSDL::getScanCode(const SKint32& keySym)
 {

@@ -28,7 +28,6 @@
 skWindowContextSDL::skWindowContextSDL(skWindowManager* owner) :
     skWindowContext(owner)
 {
-    m_capture = false;
 }
 
 void skWindowContextSDL::finalize(void)

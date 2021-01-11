@@ -58,7 +58,6 @@ void skWindow::initialize()
     }
 }
 
-
 void skWindow::__notifyMotion(const SKint32& xPos, const SKint32& yPos) const
 {
     if (m_mouse)
@@ -76,7 +75,6 @@ void skWindow::__notifyButton(const SKint32& button, const SKuint8& state) const
     if (m_mouse)
         m_mouse->notifyButton(button, state);
 }
-
 
 void skWindow::__notifyKey(const SKint32& key, const SKuint8& state) const
 {

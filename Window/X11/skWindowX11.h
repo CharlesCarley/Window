@@ -31,8 +31,6 @@
 #include "Window/skWindowTypes.h"
 class skWindowContextX11;
 
-
-
 class skWindowX11 final : public skWindow
 {
 private:
@@ -44,31 +42,40 @@ private:
     bool         m_dirty;
     SKuint32     m_flags;
 
-    void setupOpenGL(void);
-    void notifyMaximized(void) const;
-    void notifyTitle(void) const;
-    void notifyShow(void) const;
-    void notifySize(SKuint32 w, SKuint32 h);
-
     friend class skWindowContextX11;
+
+    void setupOpenGL(void);
+
+    void notifyMaximized(void) const;
+
+    void notifyTitle(void) const;
+
+    void notifyShow(void) const;
+
+    void notifySize(SKuint32 w, SKuint32 h);
 
     static SKint32 getScanCode(const SKint32& code);
 
+    void handleKey(XEvent& event) const;
 
-    void handleKey( XEvent& event) const;
     void handleMotion(const XMotionEvent& event) const;
+
     void handleButton(const XButtonEvent& event) const;
+
     void handleWheel(const XButtonEvent& event) const;
 
 public:
     skWindowX11(skWindowManager* creator);
+
     virtual ~skWindowX11();
 
     void create(const char* title, SKuint32 width, SKuint32 height, SKuint32 flags) override;
+
     void refresh(void) override;
+
     void show(bool v) override;
+
     void flush(void) override;
-    void capture(void) override;
 
     SKsize getWindowHandle(void) override
     {

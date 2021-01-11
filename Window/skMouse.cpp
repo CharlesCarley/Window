@@ -20,11 +20,13 @@
 -------------------------------------------------------------------------------
 */
 #include "Window/skMouse.h"
+#include "Utils/skAllocator.h"
 #include "Utils/skPlatformHeaders.h"
 
 skMouse::skMouse() :
     m_table(),
-    m_states{}
+    m_states{},
+    button(MBT_None)
 {
     m_states[0] = SK_NPOS32H;
     m_states[1] = SK_NPOS32H;
@@ -37,7 +39,6 @@ bool skMouse::isButtonDown(const SKint32& code) const
         return m_table[code] == WM_PRESSED;
     return false;
 }
-
 
 void skMouse::notifyMotion(const SKint32& xPos, const SKint32& yPos)
 {
@@ -56,17 +57,26 @@ void skMouse::notifyMotion(const SKint32& xPos, const SKint32& yPos)
     m_states[1] = yPos;
 }
 
-
 void skMouse::notifyWheel(const SKint32& zPos)
 {
     z.abs = zPos > 0 ? skWheelDelta : -skWheelDelta;
     z.rel = zPos > 0 ? 1 : -1;
 }
 
-
-void skMouse::notifyButton(const SKint32& button, const SKuint8& state)
+void skMouse::notifyButton(const SKint32& code, const SKuint8& state)
 {
-    if (button > MBT_None && button < MBT_Max)
-        m_table[button] = state;
+    button = code;
 
+    if (code > MBT_None && code < MBT_Max)
+        m_table[code] = state;
+}
+
+const char* skMouse::toString(const SKint32& code)
+{
+    SWITCH_TO_STRING_BEGIN(code, MBT_Max);
+    CASE_TO_STRING(MBT_None);
+    CASE_TO_STRING(MBT_L);
+    CASE_TO_STRING(MBT_M);
+    CASE_TO_STRING(MBT_R);
+    SWITCH_TO_STRING_END()
 }

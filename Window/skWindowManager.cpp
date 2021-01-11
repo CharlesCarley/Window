@@ -64,7 +64,6 @@
 
 #else
 
-
 #ifdef WITH_SDL
 #define skPlatformWindow skWindowSDL
 #define skWindowContextPlat skWindowContextSDL
@@ -269,11 +268,4 @@ void skWindowManager::broadcastEvent(const skEventType& event)
         while (wit.hasMoreElements())
             hand->handle(event, wit.getNext().second);
     }
-}
-
-void skWindowManager::captureWindows(void)
-{
-    WindowHash::Iterator it = m_windows.iterator();
-    while (it.hasMoreElements())
-        it.getNext().second->capture();
 }

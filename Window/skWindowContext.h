@@ -54,8 +54,9 @@ public:
     /// Called before the manager destroys this class.
     /// Preforms any platform specific tear down.
     /// </summary>
-    virtual void finalize(void) {}
-
+    virtual void finalize(void)
+    {
+    }
 
     /// <summary>
     /// Called when the manager instances the derived class.
@@ -80,7 +81,6 @@ public:
     /// to access events.
     /// </summary>
     virtual void process(void) = 0;
-
 
     /// <returns>Returns true if event callbacks should be issued.</returns>
     bool shouldDispatch() const

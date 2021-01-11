@@ -60,9 +60,7 @@ set(Window_SRC
     skMouse.cpp
     skKeyboard.cpp
     skWindow.cpp
-    skWindowHandler.cpp
     skWindowManager.cpp
-    skWindowEnums.cpp
     OpenGL/skOpenGL.cpp
     Inject/skWindowInject.cpp
     Inject/skWindowContextInject.cpp

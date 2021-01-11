@@ -22,9 +22,6 @@
 #ifndef _skWindowTypes_h_
 #define _skWindowTypes_h_
 
-#include "Utils/skAllocator.h"
-#include "Utils/skArray.h"
-#include "Utils/skMap.h"
 #include "skWindowEnums.h"
 
 class skWindow;
@@ -34,9 +31,8 @@ class skWindowContext;
 class skKeyboard;
 class skMouse;
 
-
 /// <summary>
-/// Array of boolean values, one per each scan code. 
+/// Array of boolean values, one per each scan code.
 /// </summary>
 typedef SKuint8 SKkeyTable[KC_MAX];
 
@@ -44,6 +40,5 @@ typedef SKuint8 SKkeyTable[KC_MAX];
 /// Array of boolean values, one per each scan code.
 /// </summary>
 typedef SKuint8 SKmouseTable[MBT_Max];
-
 
 #endif  //_skWindowTypes_h_

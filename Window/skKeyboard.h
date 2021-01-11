@@ -38,7 +38,7 @@ private:
 
     friend class skWindow;
 
-    void notifyKey(const SKint32& key, const SKuint8& state);
+    void notifyKey(const SKint32& code, const SKuint8& state);
 
 public:
     skKeyboard();
@@ -58,14 +58,16 @@ public:
     }
 
     /// <summary>
-    /// Counter for the number of buttons held down at any one time.
-    /// </summary>
-    // SKint16 count;
-
-    /// <summary>
     /// The last key code modified
     /// </summary>
-    // SKint8 key;
+    SKint32 key;
+
+    /// <summary>
+    /// Utility to get a string for the key code.
+    /// </summary>
+    /// <param name="code">A skScanCode value</param>
+    /// <returns></returns>
+    static const char* toString(const SKint32& code);
 };
 
 #endif  //_skKeyboard_h_

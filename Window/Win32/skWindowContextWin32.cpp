@@ -65,7 +65,6 @@ skWindowContextWin32::skWindowContextWin32(skWindowManager* owner) :
     skWindowContext(owner),
     m_module(0)
 {
-    m_capture = false;
     m_refresh.reserve(2);
 }
 
@@ -133,9 +132,6 @@ void skWindowContextWin32::processInteractive(bool dispatch)
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
-
-    if (m_capture)
-        m_creator->captureWindows();
 
     if (!m_refresh.empty())
         invalidateWindows();

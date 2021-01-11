@@ -49,8 +49,6 @@ public:
     SKint32 rel;
 };
 
-
-
 /// <summary>
 /// Provides access to the current mouse.
 ///
@@ -64,12 +62,11 @@ private:
     SKmouseTable m_table;
     friend class skWindow;
 
-
     SKint32 m_states[4];
 
     void notifyMotion(const SKint32& xPos, const SKint32& yPos);
     void notifyWheel(const SKint32& zPos);
-    void notifyButton(const SKint32& button, const SKuint8& state);
+    void notifyButton(const SKint32& code, const SKuint8& state);
 
 public:
     skMouse();
@@ -88,6 +85,10 @@ public:
         return m_table;
     }
 
+    /// <summary>
+    /// The last button code modified
+    /// </summary>
+    SKint32 button;
 
     /// <summary>
     /// The axis is split into two values absolute and relative.
@@ -98,6 +99,13 @@ public:
     /// The relative x, y, and z values are between [-1, 1].
     /// </summary>
     skMouseAxis x, y, z;
+
+    /// <summary>
+    /// Utility to get a string for the button code.
+    /// </summary>
+    /// <param name="code">A skMouseCode value</param>
+    /// <returns></returns>
+    static const char* toString(const SKint32& code);
 };
 
 #endif  //_skMouse_h_

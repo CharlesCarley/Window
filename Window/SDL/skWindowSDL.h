@@ -27,7 +27,6 @@
 #include "Window/skWindow.h"
 #include "Window/skWindowTypes.h"
 
-
 class skWindowSDL final : public skWindow
 {
 private:
@@ -40,10 +39,12 @@ private:
     static SKint32 getScanCode(const SKint32& keySym);
 
     void handleKey(const SDL_KeyboardEvent& evt) const;
-    void handleMouseButton(const SDL_MouseButtonEvent& evt) const;
-    void handleMouseMotion(const SDL_MouseMotionEvent& evt) const;
-    void handleMouseWheel(const SDL_MouseWheelEvent& evt) const;
 
+    void handleMouseButton(const SDL_MouseButtonEvent& evt) const;
+
+    void handleMouseMotion(const SDL_MouseMotionEvent& evt) const;
+
+    void handleMouseWheel(const SDL_MouseWheelEvent& evt) const;
 
     void notifySizeChange(SKuint32 w, SKuint32 h);
 
@@ -52,10 +53,12 @@ public:
     ~skWindowSDL() override;
 
     void create(const char* title, SKuint32 w, SKuint32 h, SKuint32 flags) override;
+
     void refresh(void) override;
+
     void show(bool v) override;
+
     void flush(void) override;
-    void capture(void) override;
 
     SKsize getWindowHandle(void) override
     {

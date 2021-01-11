@@ -23,6 +23,7 @@
 #define _skWindowManager_h_
 
 #include "skWindowTypes.h"
+#include "Utils/skMap.h"
 
 /// <summary>
 /// Manages event handling, creation and deletion
@@ -45,8 +46,13 @@ protected:
     bool             m_postShow;
 
 private:
+    friend class skWindowContext;
+
+    bool handleDirty(void);
+
     skWindowContext* createContextInstance();
-    skWindow*        createWindowInstance();
+
+    skWindow* createWindowInstance();
 
 public:
     explicit skWindowManager(skContextType type = skContextType::WM_CTX_PLATFORM);
@@ -94,14 +100,9 @@ public:
 
     void dispatchInitialEvents(void);
 
-
     skWindowContext* getContext(void) const;
 
-    void addHandler(skWindowHandler* handler);
-    void removeHandler(skWindowHandler* handler);
-
-
-
+    
     /// <summary>
     /// Sends the event and window to all registered handlers
     /// </summary>
@@ -110,20 +111,20 @@ public:
     void dispatchEvent(const skEventType& event, skWindow* window);
 
     /// <summary>
-    /// Dispatches the event to all windows. 
+    /// Dispatches the event to all windows.
     /// </summary>
     /// <param name="event">The type of event</param>
     void broadcastEvent(const skEventType& event);
 
-
-    void captureWindows(void);
-
-    SK_INLINE bool hasHandlers(void) const
+    bool hasHandlers(void) const
     {
         return !m_handlers.empty();
     }
+    void addHandler(skWindowHandler* handler);
 
-    SK_INLINE WindowHash::Iterator getWindowIterator()
+    void removeHandler(skWindowHandler* handler);
+
+    WindowHash::Iterator getWindowIterator()
     {
         return m_windows.iterator();
     }
@@ -139,10 +140,6 @@ public:
     {
         return !m_destroyWindows.empty();
     }
-
-private:
-    friend class skWindowContext;
-    bool handleDirty(void);
 };
 
 #endif  //_skWindowManager_h_

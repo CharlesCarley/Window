@@ -24,12 +24,11 @@
 #include <unistd.h>
 #include "Utils/skLogger.h"
 #include "Window/X11/skWindowX11.h"
-#include "Window/skMouse.h"
 #include "Window/skWindowManager.h"
-#include "skKeyboard.h"
 
 skWindowContextX11::skWindowContextX11(skWindowManager* owner) :
     skWindowContext(owner),
+    m_display(nullptr),
     m_creator(owner),
     m_deleteAtom(0)
 {
@@ -200,7 +199,6 @@ void skWindowContextX11::handleButton(XEvent& evt, skWindowX11* win) const
         }
     }
 }
-
 
 void skWindowContextX11::handleKey(XEvent& evt, skWindowX11* win) const
 {
