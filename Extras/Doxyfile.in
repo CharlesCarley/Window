@@ -122,7 +122,10 @@ RECURSIVE              = YES
 EXCLUDE                = 
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       =  
-EXCLUDE_SYMBOLS        = WindowProcStaticWrappers
+EXCLUDE_SYMBOLS        = WindowProcStaticWrappers \
+                         SWITCH_TO_STRING_BEGIN \
+                         CASE_TO_STRING \
+                         SWITCH_TO_STRING_END
 EXAMPLE_PATH           = 
 EXAMPLE_PATTERNS       = *
 EXAMPLE_RECURSIVE      = NO

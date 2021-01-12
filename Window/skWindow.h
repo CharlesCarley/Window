@@ -32,6 +32,8 @@
 /// manager to issue instances based on the desired backend context.
 /// The backend context is supplied when the
 /// <see cref="skWindowManager::skWindowManager">window manager</see> is created.
+///
+/// <seealso cref="skContextType"/>
 /// </summary>
 class skWindow
 {

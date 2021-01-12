@@ -29,7 +29,7 @@
 typedef enum skWindowFlags
 {
     /// <summary>
-    /// // Default re-sizable window
+    /// Default re-sizable window
     /// </summary>
     WM_WF_DEFAULT = 0x0001,
     /// <summary>
@@ -52,12 +52,12 @@ typedef enum skWindowFlags
     WM_WF_FULLSCREEN = 0x0010,
 
     /// <summary>
-    /// Create an injection window.
+    /// Create an injection window (deprecated).
     /// </summary>
     WM_WF_INJECTION = 0x0020,
 
     /// <summary>
-    /// Capture the mouse indefinitely
+    /// Capture the mouse indefinitely (deprecated).
     /// </summary>
     WM_WF_CAPTURE = 0x0040,
 
@@ -72,8 +72,20 @@ typedef enum skWindowFlags
 /// </summary>
 enum class skContextType
 {
+    /// <summary>
+    /// Unused at the moment.
+    ///
+    /// Meant to be used to embed into another system to manually
+    /// inject input events.
+    /// </summary>
     WM_CTX_INJECT,
+    /// <summary>
+    /// Use the native platform backend. Windows/X11
+    /// </summary>
     WM_CTX_PLATFORM,
+    /// <summary>
+    /// Use the SDL backend.
+    /// </summary>
     WM_CTX_SDL,
 };
 
@@ -191,8 +203,6 @@ enum skScanCode
     KC_MAX
 };
 
-extern const char* skGetScanCodeString(SKint32 kc);
-
 /// <summary>
 /// Mouse button identifiers.
 /// </summary>
@@ -264,8 +274,6 @@ enum class skEventType
 
     /// <summary>
     /// Called after a key release
-    /// The key state in question is still marked as WM_PRESSED
-    /// until after this event.
     /// </summary>
     SK_KEY_RELEASED,
 
