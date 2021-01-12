@@ -54,6 +54,8 @@ private:
 
     skWindow* createWindowInstance();
 
+    void handleLoopStart();
+
 public:
     explicit skWindowManager(skContextType type = skContextType::WM_CTX_PLATFORM);
     ~skWindowManager();

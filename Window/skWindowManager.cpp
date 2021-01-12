@@ -149,6 +149,7 @@ void skWindowManager::dispatchInitialEvents(void)
 bool skWindowManager::processInteractive(bool dispatch)
 {
     SK_ASSERT(m_context);
+    handleLoopStart();
     m_context->processInteractive(dispatch);
     return handleDirty();
 }
@@ -161,6 +162,13 @@ void skWindowManager::process(void)
         m_context->process();
         handleDirty();
     }
+}
+
+void skWindowManager::handleLoopStart()
+{
+    WindowHash::Iterator it = m_windows.iterator();
+    while (it.hasMoreElements())
+        it.getNext().second->__clearRelativeStates();
 }
 
 bool skWindowManager::handleDirty(void)

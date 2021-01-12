@@ -26,6 +26,7 @@
 #include "Window/skWindowManager.h"
 #include "Window/skWindowTypes.h"
 #include "skWindowContextWin32.h"
+#include "Utils/skLogger.h"
 
 #define MOUSE_STATE(m) ((m) == WM_LBUTTONDOWN || (m) == WM_MBUTTONDOWN || \
                         (m) == WM_RBUTTONDOWN)                            \
@@ -38,11 +39,6 @@
 
 skWindowWin32::skWindowWin32(skWindowManager* creator) :
     skWindow(creator),
-    m_pz(0),
-    m_lz(0),
-    m_lx(0),
-    m_ly(0),
-    m_init(false),
     m_hWnd(nullptr),
     m_dc(nullptr),
     m_glRC(nullptr)
@@ -106,10 +102,10 @@ void skWindowWin32::create(const char* title, SKuint32 width, SKuint32 height, S
         UpdateWindow(m_hWnd);
 
         m_dc = GetDC(m_hWnd);
+        setupOpenGL();
+
         if (flags & WM_WF_CAPTURE)
             ShowCursor(FALSE);
-
-        setupOpenGL();
 
         if (flags & WM_WF_SHOWN)
             show(true);
@@ -162,6 +158,14 @@ void skWindowWin32::flush(void)
 
 void skWindowWin32::setupOpenGL(void)
 {
+
+    if (!m_dc)
+    {
+        skLogd(LD_ERROR, "Invalid device context\n");
+        return;
+    }
+
+
     PIXELFORMATDESCRIPTOR pixelFormat = {};
 
     const int bpp = GetDeviceCaps(m_dc, BITSPIXEL);

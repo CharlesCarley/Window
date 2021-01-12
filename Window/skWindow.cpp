@@ -81,3 +81,14 @@ void skWindow::__notifyKey(const SKint32& key, const SKuint8& state) const
     if (m_keyboard)
         m_keyboard->notifyKey(key, state);
 }
+
+
+void skWindow::__clearRelativeStates() const
+{
+    if (m_mouse)
+    {
+        m_mouse->x.rel       = 0;
+        m_mouse->y.rel       = 0;
+        m_mouse->z.rel       = 0;
+    }
+}

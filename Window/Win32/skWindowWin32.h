@@ -31,9 +31,6 @@ class skWindowWin32 final : public skWindow
 private:
     friend class skWindowContextWin32;
 
-    SKint32  m_pz, m_lz;
-    SKuint32 m_lx, m_ly;
-    bool     m_init;
     HWND     m_hWnd;
     HDC      m_dc;
     HGLRC    m_glRC;

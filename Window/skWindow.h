@@ -46,6 +46,8 @@ protected:
 
     void __notifyKey(const SKint32& key, const SKuint8& state) const;
 
+    void __clearRelativeStates() const;
+
     /// <summary>
     /// Actually creates the window.
     /// </summary>
@@ -145,6 +147,8 @@ public:
         SK_ASSERT(m_creator);
         m_creator->destroy(this);
     }
+
+    
 };
 
 #endif  //_skWindow_h_
