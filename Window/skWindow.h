@@ -26,11 +26,12 @@
 #include "skWindowManager.h"
 
 /// <summary>
-/// Is the base class for all windows.
+/// skWindow Is the base class for all windows.
 ///
-/// Windows do not get instanced directly.Instead, it's the job of the window
-/// manager to issue instances based on the desired backend context.
-/// The backend context is supplied when the
+/// Windows do not get instanced directly. Instead, it's the job of the window
+/// manager to issue instances based on the desired context.
+///
+/// The context is supplied when the
 /// <see cref="skWindowManager::skWindowManager">window manager</see> is created.
 ///
 /// <seealso cref="skContextType"/>
@@ -179,7 +180,7 @@ public:
     }
 
     /// <summary>
-    /// Closes this window. 
+    /// Signals that this window should close. 
     /// 
     /// The window will not close immediately. Instead, it is pushed to a 
     /// list in the manager, then the next call to 

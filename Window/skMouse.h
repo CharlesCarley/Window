@@ -52,9 +52,7 @@ public:
 /// <summary>
 /// Provides access to the current mouse.
 ///
-/// Button states are stored in a table holding a boolean value of its
-/// current state.
-/// Access to the instance of skMouse can be found in the skWindow class.
+/// Access to the instance of this class can be found in the skWindow class.
 /// </summary>
 class skMouse
 {
@@ -77,9 +75,10 @@ public:
     /// </summary>
     /// <param name="code">The mouse button code to test</param>
     /// <returns>returns true if the button is pressed, false otherwise.</returns>
+    /// <seealso cref="skMouseCode"/>
     bool isButtonDown(const SKint32& code) const;
 
-    /// <returns>The table of mouse input states</returns>
+    /// <returns>Access to table of input states</returns>
     SKmouseTable& getTable()
     {
         return m_table;
@@ -104,7 +103,8 @@ public:
     /// Utility to get a string for the button code.
     /// </summary>
     /// <param name="code">A skMouseCode value</param>
-    /// <returns></returns>
+    /// <returns>a string representation of skMouseCode</returns>
+    /// <seealso cref="skMouseCode"/>
     static const char* toString(const SKint32& code);
 };
 

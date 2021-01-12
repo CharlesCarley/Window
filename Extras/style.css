@@ -276,10 +276,10 @@ a:hover {
 /*-----------------------------------------------------------------------------------*/
 
 h2.groupheader {
-    font-size: 16pt;
+    font-size: 14pt;
     color: #509BD2;
     font-weight: 400;
-    border-left: 8px solid #E0F0F9;
+    border-left: 2px solid #E0F0F9;
     padding: 5px;
     padding-left: 10px;
 }

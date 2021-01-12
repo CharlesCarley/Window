@@ -206,7 +206,7 @@ enum skScanCode
 /// <summary>
 /// Mouse button identifiers.
 /// </summary>
-typedef enum skMouseCode
+enum skMouseCode
 {
     MBT_None,
     /// <summary>
@@ -222,7 +222,7 @@ typedef enum skMouseCode
     /// </summary>
     MBT_R,
     MBT_Max
-} skMouseCode;
+};
 
 /// <summary>
 /// The released state value for key and button tables

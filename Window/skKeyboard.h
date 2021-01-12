@@ -27,9 +27,7 @@
 /// <summary>
 /// Provides access to the current keyboard.
 ///
-/// States are stored in a table that holds a boolean
-/// value of its current state.
-/// Access to the instance of skKeyboard can be found in the skWindow class.
+/// Access to the instance of this class can be found in the skWindow class.
 /// </summary>
 class skKeyboard
 {
@@ -49,9 +47,10 @@ public:
     /// </summary>
     /// <param name="code">The scan code to test</param>
     /// <returns>returns true if the key is pressed, false otherwise.</returns>
+    /// <seealso cref="skScanCode"/>
     bool isKeyDown(const SKuint32& code) const;
 
-    /// <returns>The table of keyboard input states</returns>
+    /// <returns>Access to table of input states</returns>
     SKkeyTable& getTable()
     {
         return m_table;
@@ -66,7 +65,8 @@ public:
     /// Utility to get a string for the key code.
     /// </summary>
     /// <param name="code">A skScanCode value</param>
-    /// <returns></returns>
+    /// <returns>a string representation of skScanCode</returns>
+    /// <seealso cref="skScanCode"/>
     static const char* toString(const SKint32& code);
 };
 
