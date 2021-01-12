@@ -1,0 +1,525 @@
+/*            
+    LabelText                = 556069  // 207, 19, 41
+    LabelAccent              = 427DA7  // 205, 61, 66
+    LabelEmphasis3           = 123551  // 207, 78, 32
+    LabelEmphasis2           = 617A8E  // 207, 32, 56
+    LabelEmphasis1           = BEC9D2  // 207, 10, 82
+    LabelEmphasisA3          = 056CB7  // 205, 97, 72
+    LabelEmphasisA2          = 5BA0D3  // 205, 57, 83
+    LabelEmphasisA1          = B9DAF2  // 205, 24, 95
+    ButtonBackground         = F9F9F9
+    ButtonText               = 556069
+    ButtonBorder             = C9D4DC
+    PressedButtonBackground  = F0F0F0
+    PressedButtonText        = B2C0CC
+    PressedButtonBorder      = F0F0F0
+    FocusedButtonBackground  = F0F0F0
+    FocusedButtonText        = 556069
+    FocusedButtonBorder      = 6FADD9
+    DisabledButtonBackground = F0F0F0
+    DisabledButtonText       = C2D1DB
+    DisabledButtonBorder     = C2D1DB
+
+
+    
+    Accent                   4885AF
+    BarBackground            484848
+    BarText                  B6B6B6
+    Middle                   D3D3D3
+    MiddleText               848484
+    Background               333333
+    BackgroundSub1           3D3D3D
+    BackgroundSub2           474747
+    LabelText                A5A5A5
+    LabelAccent              538AB2
+    LabelEmphasis3           DCDCDC
+    LabelEmphasis2           9C9C9C
+    LabelEmphasis1           565656
+    LabelEmphasisA3          5A99C7
+    LabelEmphasisA2          326B95
+    LabelEmphasisA1          2E4556
+    ButtonBackground         555555
+    ButtonText               D5D5D5
+    ButtonBorder             1F1F1F
+    PressedButtonBackground  555555
+    PressedButtonText        B2C0CC
+    PressedButtonBorder      555555
+    FocusedButtonBackground  555555
+    FocusedButtonText        D5D5D5
+    FocusedButtonBorder      6FADD9
+    DisabledButtonBackground 555555
+    DisabledButtonText       666666
+    DisabledButtonBorder     666666
+*/
+@font-face {
+    font-family: ProductionIcons;
+    src: url(/rails.png) returns "/assets/icons.ttf#ProductionIcons";
+    font-style: normal;
+    font-weight: 400;
+}
+
+.icons {
+    font-family: ProductionIcons;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+}
+
+body {
+    font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
+    background-color: #ffffff;
+    color: #123551;
+    margin: 0;
+    padding: 0;
+}
+
+.footer {
+    font-size: 9pt;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 16pt;
+}
+
+.line {
+    font-size: 9pt;
+    padding-bottom: 5px;
+    white-space:pre;
+}
+
+li {
+    list-style: none;
+    font-size: 10pt;
+    padding-bottom: 3px;
+}
+
+a {
+    color: #538AB2;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.main-title {
+    padding-top: 7px;
+    padding-right: 7px;
+    padding-left: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 16px;
+    background-color: #333333;
+    font-size: 16pt;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 18pt;
+    color: #66B322;
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+.title-index {
+    width: 100%;
+}
+
+.title-link {
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 9pt;
+}
+
+.main-title a {
+    color: #A7A7A7;
+}
+
+.summary {
+    text-align: center;
+    color: #B3229B;
+    font-size: 10pt;
+}
+
+a.summary{
+    width: 100%;
+    color: #336F9B;
+    font-weight: 500;
+    border-bottom: 1px solid #E0F0F9;
+}
+
+.contents {
+    font-size: 14pt;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.icon {
+    visibility: hidden;
+}
+
+.levels {
+    visibility: hidden;
+}
+
+.arrow {
+    visibility: hidden;
+}
+
+.lineno {
+    visibility: hidden;
+}
+
+.permalink {
+    visibility: hidden;
+}
+
+code {
+    font-size: 10pt;
+}
+
+dd {
+    padding-left: 18pt;
+}
+/*------------------- Members ---------------------*/
+
+.memtitle {
+    margin-top: 18pt;
+    background: #FCFCFC;
+    color: #692DB2;
+    border-top: 1px solid #E0F0F9;
+    border-bottom: 1px solid #E0F0F9;
+    font-weight: 500;
+}
+
+.memproto {
+    padding-left: 18pt;
+    padding-bottom: 18pt;
+}
+
+
+.memberdecls {
+    text-align: start;
+    margin-bottom: 10pt;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #385263;
+}
+
+h1 {
+    font-size: 18pt;
+}
+
+h2 {
+    font-size: 16pt;
+    color: #509BD2;
+    font-weight: 400;
+    border-left: 8px solid #E0F0F9;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+h3 {
+    font-size: 14pt;
+}
+
+h4 {
+    font-size: 12pt;
+}
+
+h5 {
+    font-size: 10pt;
+}
+
+h6 {
+    font-size: 8pt;
+}
+
+.params, .return {
+    padding-left: 16pt;
+}
+
+div.header {
+    margin: 16px;
+}
+
+div.headertitle {
+    padding: 5px 5px 5px 5px;
+}
+
+
+tr.heading h2 {
+    background: #FCFCFC;
+    border-bottom: 1px solid #E0F0F9;
+}
+
+/*-----------------------------------------------------------------------------------s*/
+div.fragment {
+    border: 1px solid #CFDEE7;
+    padding: 8px;
+    background-color: #FAFAFA;
+    font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", monospace;
+    font-size: 8px;
+}
+
+
+/*-----------------------------------------------------------------------------------*/
+/* @group Link Styling */
+
+a:hover {
+    color: #509BD2;
+}
+
+/*-----------------------------------------------------------------------------------*/
+
+h2.groupheader {
+    font-size: 16pt;
+    color: #509BD2;
+    font-weight: 400;
+    border-left: 8px solid #E0F0F9;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+
+.fieldname {
+    color: #B3229B;
+    padding-left: 24pt;
+}
+th {
+    text-align: start;
+    color: #509BD2;
+    padding-left: 16pt;
+}
+
+
+body, table, div, p, dl {
+    font-size: 12pt;
+}
+
+li, ul {
+    font-size: 10pt;
+}
+
+
+div.center {
+    text-align: center;
+    margin-top: 8pt;
+    margin-bottom: 8pt;
+    border: 1px solid #E0F0F9;
+    background: #FAFAFA;
+    padding: 8pt;
+}
+
+span.keyword {
+    color: #008000;
+}
+
+span.keywordtype {
+    color: #604020;
+}
+
+span.keywordflow {
+    color: #e08000;
+}
+
+span.comment {
+    color: #800000;
+}
+
+span.preprocessor {
+    color: #806020;
+}
+
+span.stringliteral {
+    color: #002080;
+}
+
+span.charliteral {
+    color: #008080;
+}
+
+span.vhdldigit {
+    color: #ff00ff;
+}
+
+span.vhdlchar {
+    color: #000000;
+}
+
+span.vhdlkeyword {
+    color: #700070;
+}
+
+span.vhdllogic {
+    color: #ff0000;
+}
+
+hr {
+    height: 0;
+    border-top: 1px solid #E0F0F9;
+}
+
+.footer a {
+    width: 100%;
+    color: #336F9B;
+    font-weight: 500;
+    border-bottom: 1px solid #E0F0F9;
+}
+
+
+.memitem {
+    margin-left: 0pt;
+}
+
+    .memitem p {
+        margin-left: 30pt;
+    }
+
+    .memitem dt {
+        font-weight: 500;
+        color: #509BD2;
+    }
+
+.paramname {
+    color: #B3229B;
+    font-weight: 600;
+}
+
+
+.params .paramname, .retval .paramname {
+    text-align: start;
+    font-weight: 600;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-style: italic;
+    vertical-align: top;
+}
+
+div.center img {
+    -moz-align-content: center;
+    -o-align-content: center;
+    -webkit-align-content: center;
+    align-content: center;
+}
+
+span.keyword {
+    color: #008000
+}
+
+span.keywordtype {
+    color: #604020
+}
+
+span.keywordflow {
+    color: #e08000
+}
+
+span.comment {
+    color: #800000
+}
+
+span.preprocessor {
+    color: #806020
+}
+
+span.stringliteral {
+    color: #002080
+}
+
+span.charliteral {
+    color: #008080
+}
+
+span.vhdldigit {
+    color: #ff00ff
+}
+
+span.vhdlchar {
+    color: #000000
+}
+
+span.vhdlkeyword {
+    color: #700070
+}
+
+span.vhdllogic {
+    color: #ff0000
+}
+
+.mdescLeft, .mdescRight {
+    font-size: 9pt;
+    padding-left: 9pt;
+}
+
+span.mlabel {
+    padding: 6px;
+    font-size: 80%;
+    font-weight: 100;
+    font-style: italic;
+}
+
+.directory {
+    font-size: 90%;
+    padding: 0;
+    margin: 0;
+    border-spacing: 0;
+}
+
+.icona {
+    visibility: hidden;
+}
+
+.directory td {
+    border-bottom: 1px solid #BFDEEF;
+    vertical-align: center;
+    padding-right: 12pt;
+}
+
+.directory .el {
+}
+
+
+.directory td.entry {
+    font-size: 80%;
+    padding-top: 4pt;
+    padding-bottom: 4pt;
+}
+
+.directory tr.even {
+    background: #FCFCFC;
+}
+
+.arrow {
+    visibility: hidden;
+}
+
+div.dynheader {
+    padding-bottom: 15px;
+    font-size: 9pt;
+}
+
+.memSeparator {
+    visibility: hidden;
+}
+
+td.memItemRight {
+    font-size: 10pt;
+}
+
+td.memItemLeft {
+    font-size: 10pt;
+}
+
+div.textblock {
+    font-size: 80%;
+    padding-bottom: 16pt;
+}
+
+td.desc {
+    font-size: 85%;
+    text-align: start;
+}

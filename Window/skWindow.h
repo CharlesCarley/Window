@@ -25,7 +25,14 @@
 #include "Window/skWindowTypes.h"
 #include "skWindowManager.h"
 
-/// Generic window interface for accessing platform windows.
+/// <summary>
+/// Is the base class for all windows.
+///
+/// Windows do not get instanced directly.Instead, it's the job of the window
+/// manager to issue instances based on the desired backend context.
+/// The backend context is supplied when the
+/// <see cref="skWindowManager::skWindowManager">window manager</see> is created.
+/// </summary>
 class skWindow
 {
 protected:
@@ -38,14 +45,36 @@ protected:
 
     friend class skWindowManager;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="xPos"></param>
+    /// <param name="yPos"></param>
     void __notifyMotion(const SKint32& xPos, const SKint32& yPos) const;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="zDelta"></param>
     void __notifyWheel(const SKint32& zDelta) const;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="button"></param>
+    /// <param name="state"></param>
     void __notifyButton(const SKint32& button, const SKuint8& state) const;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="state"></param>
     void __notifyKey(const SKint32& key, const SKuint8& state) const;
 
+    /// <summary>
+    /// 
+    /// </summary>
     void __clearRelativeStates() const;
 
     /// <summary>
@@ -86,8 +115,16 @@ public:
     /// </summary>
     virtual void flush(void) = 0;
 
-    /// <returns>Returns a pointer to the underlying window system window handle.</returns>
+    /// <summary>
+    /// Provides access to the underlying window handle.
+    /// 
+    /// The win32 backend returns HWND pointer, the SDL and X11 backends return 
+    /// an integer id value.
+    /// </summary>
+    /// <returns>Returns the underlying window system window handle.</returns>
     virtual SKsize getWindowHandle(void) = 0;
+
+
 
     /// <returns>Returns the manager that created this window.</returns>
     skWindowManager* getCreator(void) const
@@ -140,15 +177,18 @@ public:
     }
 
     /// <summary>
-    /// Close this window
-    /// </summary>
+    /// Closes this window. 
+    /// 
+    /// The window will not close immediately. Instead, it is pushed to a 
+    /// list in the manager, then the next call to 
+    /// <see cref="skWindowManager::process">process</see> or 
+    /// <see cref="skWindowManager::process">processInteractive</see> will remove and 
+    /// destroy the window.
     void close()
     {
         SK_ASSERT(m_creator);
         m_creator->destroy(this);
     }
-
-    
 };
 
 #endif  //_skWindow_h_

@@ -28,6 +28,7 @@ set(CMAKE_MODULE_PATH
 
 include(Configure)
 subdirs(CMake)
+subdirs(Extras)
 subdirs(Extern)
 subdirs(Window)
 subdirs(Test)
