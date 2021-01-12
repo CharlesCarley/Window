@@ -224,15 +224,14 @@ typedef enum skMouseCode
     MBT_Max
 } skMouseCode;
 
-/*!
- * \brief Input state access.
- *
- * For buttons and keys a boolean state
- * of pressed or released is assigned.
- * \see skKeyTable
- */
-
+/// <summary>
+/// The released state value for key and button tables
+/// </summary>
 #define WM_RELEASED 0
+
+/// <summary>
+/// The pressed state value for key and button tables
+/// </summary>
 #define WM_PRESSED 1
 
 /// <summary>
@@ -299,7 +298,7 @@ enum class skEventType
 };
 
 /// <summary>
-/// The scroll unit for the mouse wheel
+/// Arbitrary scroll unit for the mouse wheel.
 /// </summary>
 const SKint32 skWheelDelta = 120;
 

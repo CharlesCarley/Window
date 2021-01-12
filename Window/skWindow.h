@@ -120,7 +120,7 @@ public:
     /// <summary>
     /// Provides access to the underlying window handle.
     /// 
-    /// The win32 backend returns HWND pointer, the SDL and X11 backends return 
+    /// The win32 backend returns HWND pointer, the SDL and X11 backend return 
     /// an integer id value.
     /// </summary>
     /// <returns>Returns the underlying window system window handle.</returns>

@@ -24,17 +24,37 @@
 
 #include "skWindowManager.h"
 
+/// <summary>
+/// Interface for a window context.
+///
+/// The job of the context class is to relay any input events to the window
+/// classes. As well as notify the window manager when the events should be
+/// dispatched to event listeners.
+/// </summary>
 class skWindowContext
 {
 protected:
     skWindowManager* m_creator;
     bool             m_shouldDispatch;
 
+    /// <summary>
+    /// Internal window look up
+    ///
+    /// The search key needs to be a unique identifier.
+    /// 
+    /// For a window in windows its the integer representation
+    /// of the HWND structure. On SDL/X11 its the Window ID handle.
+    ///
+    /// </summary>
+    /// <param name="win">
+    /// The internal window 
+    /// <see cref="skWindow::getWindowHandle">handle</see>
+    /// </param>
+    /// <returns>
+    /// The window associated with the handle or a null pointer if the window is not found
+    /// </returns>
     skWindow* find(const SKsize win) const
     {
-        // The search key needs to be a unique identifier.
-        // For a window in windows its the integer representation
-        // of the HWND structure. On SDL/X11 its the Window ID handle.
         const SKsize loc = m_creator->m_windows.find(win);
         if (loc != SK_NPOS)
             return m_creator->m_windows.at(loc);
