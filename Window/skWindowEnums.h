@@ -29,54 +29,52 @@
 typedef enum skWindowFlags
 {
     /// <summary>
-    /// Default re-sizable window
+    /// Default re-sizable window.
     /// </summary>
     WM_WF_DEFAULT = 0x0001,
     /// <summary>
-    /// Non re-sizable window
+    /// Non re-sizable window.
     /// </summary>
     WM_WF_DIALOG = 0x0002,
     /// <summary>
-    /// Show maximized initially
+    /// Show maximized initially.
     /// </summary>
     WM_WF_MAXIMIZE = 0x0004,
 
     /// <summary>
-    /// Center the window in the screen
+    /// Center the window in the screen.
     /// </summary>
     WM_WF_CENTER = 0x0008,
 
     /// <summary>
-    /// Show full screen (not implemented at the moment)
+    /// Show full screen. (not implemented at the moment)
     /// </summary>
     WM_WF_FULLSCREEN = 0x0010,
 
     /// <summary>
-    /// Create an injection window (deprecated).
+    /// Create an injection window. (deprecated).
     /// </summary>
     WM_WF_INJECTION = 0x0020,
 
     /// <summary>
-    /// Capture the mouse indefinitely (deprecated).
+    /// Capture the mouse indefinitely. (deprecated).
     /// </summary>
     WM_WF_CAPTURE = 0x0040,
 
     /// <summary>
-    /// Create a window that is initially shown
+    /// Create a window that is initially shown.
     /// </summary>
     WM_WF_SHOWN = 0x0080,
 } skWindowFlags;
 
 /// <summary>
-/// Indicates which context the skWindowManager should use.
+/// Indicates which context the window manager should use.
 /// </summary>
 enum class skContextType
 {
     /// <summary>
     /// Unused at the moment.
-    ///
-    /// Meant to be used to embed into another system to manually
-    /// inject input events.
+    /// It is meant to be used to embed into another system to manually inject input events.
     /// </summary>
     WM_CTX_INJECT,
     /// <summary>
@@ -210,27 +208,27 @@ enum skMouseCode
 {
     MBT_None,
     /// <summary>
-    /// Left Mouse Button
+    /// Left mouse button.
     /// </summary>
     MBT_L,
     /// <summary>
-    /// Middle Mouse Button
+    /// Middle mouse button.
     /// </summary>
     MBT_M,
     /// <summary>
-    /// Right Mouse Button
+    /// Right mouse button.
     /// </summary>
     MBT_R,
     MBT_Max
 };
 
 /// <summary>
-/// The released state value for key and button tables
+/// The released state value for key and button tables.
 /// </summary>
 #define WM_RELEASED 0
 
 /// <summary>
-/// The pressed state value for key and button tables
+/// The pressed state value for key and button tables.
 /// </summary>
 #define WM_PRESSED 1
 
@@ -242,52 +240,52 @@ enum class skEventType
     SK_WIN_EVT_UNKNOWN,
 
     /// <summary>
-    /// The window needs painted
+    /// The window needs painted.
     /// </summary>
     SK_WIN_PAINT,
 
     /// <summary>
-    /// Called when the window's size changed
+    /// Called when the window's size changed.
     /// </summary>
     SK_WIN_SIZE,
 
     /// <summary>
-    /// Called when the window is shown
+    /// Called when the window is shown.
     /// </summary>
     SK_WIN_SHOWN,
 
     /// <summary>
-    /// Called when the window is hidden
+    /// Called when the window is hidden.
     /// </summary>
     SK_WIN_HIDDEN,
 
     /// <summary>
-    /// Called when the close button was clicked
+    /// Called when the close button was clicked.
     /// </summary>
     SK_WIN_DESTROY,
 
     /// <summary>
-    /// Called after a key press
+    /// Called after a key press.
     /// </summary>
     SK_KEY_PRESSED,
 
     /// <summary>
-    /// Called after a key release
+    /// Called after a key release.
     /// </summary>
     SK_KEY_RELEASED,
 
     /// <summary>
-    /// Called after the mouse was moved
+    /// Called after the mouse was moved.
     /// </summary>
     SK_MOUSE_MOVED,
 
     /// <summary>
-    /// Called after a mouse button is pressed
+    /// Called after a mouse button was pressed.
     /// </summary>
     SK_MOUSE_PRESSED,
 
     /// <summary>
-    /// Called after a mouse button is released
+    /// Called after a mouse button was released.
     /// </summary>
     SK_MOUSE_RELEASED,
 

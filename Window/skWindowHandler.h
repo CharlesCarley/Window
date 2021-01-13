@@ -26,7 +26,8 @@
 
 /// <summary>
 /// Window event handler.
-/// Use with skWindowManager::addHandler to get
+///
+/// Use with <see cref="skWindowManager::addHandler">addHandler</see> to get
 /// event callbacks through this class.
 /// </summary>
 class skWindowHandler
@@ -35,7 +36,7 @@ public:
     virtual ~skWindowHandler() = default;
 
     /// <summary>
-    /// Handle a specific event
+    /// Handle a specific event.
     /// </summary>
     /// <param name="event">The specific event type.</param>
     /// <param name="window">The window in which the event took place.</param>

@@ -38,20 +38,20 @@ protected:
     bool             m_shouldDispatch;
 
     /// <summary>
-    /// Internal window look up
+    /// Internal window look up.
     ///
     /// The search key needs to be a unique identifier.
     /// 
     /// For a window in windows its the integer representation
-    /// of the HWND structure. On SDL/X11 its the Window ID handle.
-    ///
+    /// of the HWND pointer. On SDL/X11 it's the Window ID handle.
+    ///  
     /// </summary>
     /// <param name="win">
-    /// The internal window 
+    /// The platform window.
     /// <see cref="skWindow::getWindowHandle">handle</see>
     /// </param>
     /// <returns>
-    /// The window associated with the handle or a null pointer if the window is not found
+    /// The window associated with the handle or a null pointer it is not found.
     /// </returns>
     skWindow* find(const SKsize win) const
     {
@@ -72,7 +72,8 @@ public:
 
     /// <summary>
     /// Called before the manager destroys this class.
-    /// Preforms any platform specific tear down.
+    ///
+    /// Should perform any platform specific tear down.
     /// </summary>
     virtual void finalize(void)
     {
@@ -80,25 +81,27 @@ public:
 
     /// <summary>
     /// Called when the manager instances the derived class.
-    /// Preforms any platform specific initialization.
+    ///
+    /// Should perform any platform specific initialization.
     /// </summary>
     virtual void initialize() = 0;
 
     /// <summary>
     /// Preforms one event poling loop.
-    /// The main idea is to populate classes from events
-    /// and then access their state later.
+    ///
+    /// The main idea of this method is to populate input classes from
+    /// events and access their state later without using event handlers.
     /// </summary>
     /// <param name="dispatch">
-    /// A value of true means populate the event classes
-    /// and dispatch callbacks to any listeners.
-    /// </param>
+    /// If dispatch is set to true, then event callbacks will be issued.
+    ///</param>
     virtual void processInteractive(bool dispatch = false) = 0;
 
     /// <summary>
     /// Preforms a continuous loop and sleeps if there are no events
-    /// to process. A callback handler should be set in the manager
-    /// to access events.
+    /// to process.
+    ///
+    /// A callback handler should be set in the manager to access events.
     /// </summary>
     virtual void process(void) = 0;
 

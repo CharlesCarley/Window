@@ -22,8 +22,8 @@
 #ifndef _skWindowManager_h_
 #define _skWindowManager_h_
 
-#include "skWindowTypes.h"
 #include "Utils/skMap.h"
+#include "skWindowTypes.h"
 
 /// <summary>
 /// Manages event handling, creation and deletion
@@ -64,52 +64,54 @@ public:
     /// Creates a managed window.
     /// </summary>
     ///
-    /// <param name="title">The window title</param>
-    /// <param name="width">the desired window's width in pixels</param>
-    /// <param name="height">the desired window's height in pixels</param>
-    /// <param name="flags">Extra creation flags <see cref="skWindowFlags">skWindowFlags</see> </param>
-    /// <returns>A window instance</returns>
+    /// <param name="title">The window title.</param>
+    /// <param name="width">The desired window's width in pixels.</param>
+    /// <param name="height">The desired window's height in pixels.</param>
+    /// <param name="flags">Extra creation <see cref="skWindowFlags">flags</see>. </param>
+    /// <returns>A window instance.</returns>
     skWindow* create(const char* title, SKuint32 width, SKuint32 height, SKuint32 flags);
 
     /// <summary>
-    /// Schedule a window for deletion.
+    /// Schedules a window for deletion.
     /// </summary>
-    /// <param name="window">The window to destroy</param>
+    /// <param name="window">The window to destroy.</param>
     void destroy(skWindow* window);
 
     /// <summary>
-    ///
+    /// Schedules all windows for deletion.
     /// </summary>
     void destroyAll();
 
+
     /// <summary>
     /// Preforms one event poling loop.
-    /// The main idea is to populate classes from events
-    /// and then access their state later.
+    ///
+    /// The main idea of this method is to populate input classes from
+    /// events and access their state later without using event handlers.
     /// </summary>
     /// <param name="dispatch">
-    /// A value of true means populate the event classes
-    /// and dispatch callbacks to any listeners.
-    /// </param>
+    /// If dispatch is set to true, then event callbacks will be issued.
+    ///</param>
     bool processInteractive(bool dispatch = false);
 
     /// <summary>
     /// Preforms a continuous loop and sleeps if there are no events
-    /// to process. A callback handler should be set in the manager
-    /// to access events.
+    /// to process.
+    ///
+    /// A callback handler should be set in the manager to access events.
     /// </summary>
-    void process(void);
+    void process();
 
-    void dispatchInitialEvents(void);
+    void dispatchInitialEvents();
 
-    skWindowContext* getContext(void) const;
+    /// <returns>Returns the internal context.</returns>
+    skWindowContext* getContext() const;
 
-    
     /// <summary>
-    /// Sends the event and window to all registered handlers
+    /// Sends the event and window to all registered handlers.
     /// </summary>
-    /// <param name="event">The type of event</param>
-    /// <param name="window">The window where the event took place</param>
+    /// <param name="event">The type of event.</param>
+    /// <param name="window">The window where the event took place.</param>
     void dispatchEvent(const skEventType& event, skWindow* window);
 
     /// <summary>
@@ -118,29 +120,26 @@ public:
     /// <param name="event">The type of event</param>
     void broadcastEvent(const skEventType& event);
 
-    bool hasHandlers(void) const
+    /// <summary>
+    /// Registers the supplied callback listener.
+    /// </summary>
+    void addHandler(skWindowHandler* handler);
+
+    /// <summary>
+    /// Removes the supplied callback listener.
+    /// </summary>
+    void removeHandler(skWindowHandler* handler);
+
+    /// <returns>Returns true if any handlers are registered.</returns>
+    bool hasHandlers() const
     {
         return !m_handlers.empty();
     }
-    void addHandler(skWindowHandler* handler);
 
-    void removeHandler(skWindowHandler* handler);
-
+    /// <returns>Returns an iterator for all active windows.</returns>
     WindowHash::Iterator getWindowIterator()
     {
         return m_windows.iterator();
-    }
-
-    void reserve(const SKuint32 cap)
-    {
-        m_windows.reserve((SKsize)cap);
-        m_destroyWindows.reserve(cap);
-        m_handlers.reserve(cap);
-    }
-
-    bool hasDirtyWindows() const
-    {
-        return !m_destroyWindows.empty();
     }
 };
 

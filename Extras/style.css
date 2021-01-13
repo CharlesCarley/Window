@@ -51,26 +51,6 @@
     DisabledButtonText       666666
     DisabledButtonBorder     666666
 */
-@font-face {
-    font-family: ProductionIcons;
-    src: url(/rails.png) returns "/assets/icons.ttf#ProductionIcons";
-    font-style: normal;
-    font-weight: 400;
-}
-
-.icons {
-    font-family: ProductionIcons;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-}
 
 body {
     font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
