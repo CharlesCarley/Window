@@ -49,39 +49,52 @@ protected:
     friend class skWindowManager;
 
     /// <summary>
-    /// 
+    /// Internal method that should be called after any motion
+    /// information has been collected from a platform event.
     /// </summary>
-    /// <param name="xPos"></param>
-    /// <param name="yPos"></param>
+    /// <param name="xPos">
+    /// The cursor's absolute x coordinate relative to the left
+    /// portion of the window rectangle.
+    /// </param>
+    /// <param name="yPos">
+    /// The cursor's absolute y coordinate relative to the top
+    /// portion of the window rectangle.
+    /// </param>
     void __notifyMotion(const SKint32& xPos, const SKint32& yPos) const;
 
     /// <summary>
-    /// 
+    /// Internal method that should be called after any wheel
+    /// information has been collected from a platform event.
     /// </summary>
-    /// <param name="zDelta"></param>
+    /// <param name="zDelta">
+    /// zDelta is an arbitrary value that shows scroll direction.
+    /// Positive indicates a forward scroll and, negative indicates a backward scroll.
+    /// </param>
     void __notifyWheel(const SKint32& zDelta) const;
 
     /// <summary>
-    /// 
+    /// Internal method that should be called after any button
+    /// information has been collected from a platform event.
     /// </summary>
-    /// <param name="button"></param>
-    /// <param name="state"></param>
+    /// <param name="button">The <see cref="skMouseCode">button</see> in question.</param>
+    /// <param name="state">The <see cref="WM_PRESSED">state</see> of the event.</param>
     void __notifyButton(const SKint32& button, const SKuint8& state) const;
 
     /// <summary>
-    /// 
+    /// Internal method that should be called after any key
+    /// information has been collected from a platform event.
     /// </summary>
-    /// <param name="key"></param>
-    /// <param name="state"></param>
+    /// <param name="key">The <see cref="skScanCode">key</see> in question.</param>
+    /// <param name="state">The <see cref="WM_PRESSED">state</see> of the event.</param>
     void __notifyKey(const SKint32& key, const SKuint8& state) const;
 
     /// <summary>
-    /// 
+    /// Resets any relative change information in input classes.
     /// </summary>
     void __clearRelativeStates() const;
 
     /// <summary>
-    /// Actually creates the window.
+    /// Called when the backend window should actually be created.
     /// </summary>
     /// <param name="title">The window title</param>
     /// <param name="width">the desired window's width in pixels</param>
