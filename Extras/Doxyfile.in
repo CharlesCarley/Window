@@ -125,7 +125,8 @@ EXCLUDE_PATTERNS       =
 EXCLUDE_SYMBOLS        = WindowProcStaticWrappers \
                          SWITCH_TO_STRING_BEGIN \
                          CASE_TO_STRING \
-                         SWITCH_TO_STRING_END
+                         SWITCH_TO_STRING_END \
+                         DEFAULT_ICON 
 EXAMPLE_PATH           = 
 EXAMPLE_PATTERNS       = *
 EXAMPLE_RECURSIVE      = NO
