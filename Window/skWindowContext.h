@@ -94,7 +94,7 @@ public:
     /// </summary>
     /// <param name="dispatch">
     /// If dispatch is set to true, then event callbacks will be issued.
-    ///</param>
+    /// </param>
     virtual void processInteractive(bool dispatch = false) = 0;
 
     /// <summary>

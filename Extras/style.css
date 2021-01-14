@@ -64,13 +64,20 @@ body {
     font-size: 9pt;
     text-align: center;
     width: 100%;
+    margin-top: 4pt;
     margin-bottom: 16pt;
+}
+
+.hrozrule {
+    background-color: #E0F0F9;
+    height: 1px;
+    margin-bottom: 4pt;
 }
 
 .line {
     font-size: 9pt;
     padding-bottom: 5px;
-    white-space:pre;
+    white-space: pre;
 }
 
 li {
@@ -197,9 +204,7 @@ h2 {
     font-size: 16pt;
     color: #509BD2;
     font-weight: 400;
-    border-left: 8px solid #E0F0F9;
     padding: 5px;
-    padding-left: 10px;
 }
 
 h3 {
@@ -259,7 +264,6 @@ h2.groupheader {
     font-size: 14pt;
     color: #509BD2;
     font-weight: 400;
-    border-left: 2px solid #E0F0F9;
     padding: 5px;
     padding-left: 10px;
 }
@@ -380,9 +384,6 @@ hr {
 }
 
 div.center img {
-    -moz-align-content: center;
-    -o-align-content: center;
-    -webkit-align-content: center;
     align-content: center;
 }
 
@@ -491,6 +492,17 @@ td.memItemRight {
 }
 
 td.memItemLeft {
+    font-size: 10pt;
+}
+
+dl.section {
+    font-size: 10pt;
+}
+
+.mdescLeft {
+    font-size: 10pt;
+}
+.mdescRight {
     font-size: 10pt;
 }
 
