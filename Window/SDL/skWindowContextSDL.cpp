@@ -54,11 +54,6 @@ void skWindowContextSDL::process(void)
         {
             handleEvent(msg);
             waitForNext = false;
-
-            // exit on the first occurrence
-            // of a dirty window
-            if (m_creator->hasDirtyWindows())
-                break;
         }
         if (waitForNext)
             SDL_Delay(1);

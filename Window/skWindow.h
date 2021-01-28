@@ -200,6 +200,7 @@ public:
     /// <see cref="skWindowManager::process">process</see> or 
     /// <see cref="skWindowManager::process">processInteractive</see> will remove and 
     /// destroy the window.
+    /// </summary>
     void close()
     {
         SK_ASSERT(m_creator);
