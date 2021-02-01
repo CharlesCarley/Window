@@ -23,6 +23,8 @@
 #define _skWindowEnums_h_
 #include "Utils/Config/skConfig.h"
 
+SK_ST_C;
+
 /// <summary>
 ///  Window creation flags.
 /// </summary>
@@ -70,7 +72,7 @@ typedef enum skWindowFlags
 /// <summary>
 /// Indicates which context the window manager should use.
 /// </summary>
-enum class skContextType
+typedef enum skContextType
 {
     /// <summary>
     /// Unused at the moment.
@@ -85,12 +87,12 @@ enum class skContextType
     /// Use the SDL backend.
     /// </summary>
     WM_CTX_SDL,
-};
+} skContextType;
 
 /// <summary>
 /// Unordered list of key code identifiers.
 /// </summary>
-enum skScanCode
+typedef enum skScanCode
 {
     KC_NONE,
     KC_A,
@@ -199,12 +201,12 @@ enum skScanCode
     KC_ALT,
     KC_SHIFT,
     KC_MAX
-};
+} skScanCode;
 
 /// <summary>
 /// Mouse button identifiers.
 /// </summary>
-enum skMouseCode
+typedef enum skMouseCode
 {
     MBT_None,
     /// <summary>
@@ -220,7 +222,7 @@ enum skMouseCode
     /// </summary>
     MBT_R,
     MBT_Max
-};
+} skMouseCode;
 
 /// <summary>
 /// The released state value for key and button tables.
@@ -235,7 +237,7 @@ enum skMouseCode
 /// <summary>
 /// Enumeration of window system events.
 /// </summary>
-enum class skEventType
+typedef enum skEventType
 {
     SK_WIN_EVT_UNKNOWN,
 
@@ -293,7 +295,7 @@ enum class skEventType
     /// Called after a wheel state change.
     /// </summary>
     SK_MOUSE_WHEEL,
-};
+} skEventType;
 
 /// <summary>
 /// Arbitrary scroll unit for the mouse wheel.
@@ -312,4 +314,5 @@ const SKint32 skWheelDelta = 120;
     case v:               \
         return #v
 
+SK_EN_C;
 #endif  //_skWindowEnums_h_
