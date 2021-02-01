@@ -712,7 +712,7 @@ bool skLoadOpenGL(void)
     if (!opengl)
         return false;
 #elif SK_PLATFORM == SK_PLATFORM_LINUX
-    opengl = dlopen("gl", RTLD_LAZY);
+    opengl = dlopen("libGL.so", RTLD_LAZY);
     if (!opengl)
         return false;
 #endif

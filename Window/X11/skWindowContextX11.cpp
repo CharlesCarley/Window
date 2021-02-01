@@ -148,8 +148,6 @@ void skWindowContextX11::handleExpose(XEvent& evt, skWindowX11* win) const
     {
         if (shouldDispatch())
             m_creator->dispatchEvent(skEventType::SK_WIN_PAINT, win);
-
-        win->flush();
     }
 }
 

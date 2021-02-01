@@ -154,10 +154,10 @@ void skWindowX11::create(const char* title, SKuint32 width, SKuint32 height, SKu
     if (m_flags & WM_WF_MAXIMIZE)
         notifyMaximized();
 
-    setupOpenGL();
-
     if (m_flags & WM_WF_SHOWN)
         show(true);
+
+    setupOpenGL();
 }
 
 void skWindowX11::notifyMaximized(void) const
