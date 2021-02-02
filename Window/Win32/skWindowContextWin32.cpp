@@ -160,7 +160,7 @@ void skWindowContextWin32::handleSize(skWindowWin32* window, SKuintPtr lParam) c
     window->sizedChanged(lParam);
 
     if (shouldDispatch())
-        m_creator->dispatchEvent(skEventType::SK_WIN_SIZE, window);
+        m_creator->dispatchEvent(SK_WIN_SIZE, window);
 }
 
 void skWindowContextWin32::handlePaint(skWindowWin32* window) const
@@ -168,7 +168,7 @@ void skWindowContextWin32::handlePaint(skWindowWin32* window) const
     if (shouldDispatch())
     {
         window->validate();
-        m_creator->dispatchEvent(skEventType::SK_WIN_PAINT, window);
+        m_creator->dispatchEvent(SK_WIN_PAINT, window);
     }
     else
         window->validate();
@@ -177,7 +177,7 @@ void skWindowContextWin32::handlePaint(skWindowWin32* window) const
 void skWindowContextWin32::handleClose(skWindowWin32* window) const
 {
     if (shouldDispatch())
-        m_creator->dispatchEvent(skEventType::SK_WIN_DESTROY, window);
+        m_creator->dispatchEvent(SK_WIN_DESTROY, window);
 
     m_creator->destroy(window);
 }
@@ -196,18 +196,18 @@ void skWindowContextWin32::handleMouse(skWindowWin32* window,
         case WM_LBUTTONDOWN:
         case WM_MBUTTONDOWN:
         case WM_RBUTTONDOWN:
-            m_creator->dispatchEvent(skEventType::SK_MOUSE_PRESSED, window);
+            m_creator->dispatchEvent(SK_MOUSE_PRESSED, window);
             break;
         case WM_LBUTTONUP:
         case WM_MBUTTONUP:
         case WM_RBUTTONUP:
-            m_creator->dispatchEvent(skEventType::SK_MOUSE_RELEASED, window);
+            m_creator->dispatchEvent(SK_MOUSE_RELEASED, window);
             break;
         case WM_MOUSEWHEEL:
-            m_creator->dispatchEvent(skEventType::SK_MOUSE_WHEEL, window);
+            m_creator->dispatchEvent(SK_MOUSE_WHEEL, window);
             break;
         case WM_MOUSEMOVE:
-            m_creator->dispatchEvent(skEventType::SK_MOUSE_MOVED, window);
+            m_creator->dispatchEvent(SK_MOUSE_MOVED, window);
             break;
         default:
             break;
@@ -227,11 +227,11 @@ void skWindowContextWin32::handleKey(skWindowWin32* window,
         {
         case WM_SYSKEYUP:
         case WM_KEYUP:
-            m_creator->dispatchEvent(skEventType::SK_KEY_RELEASED, window);
+            m_creator->dispatchEvent(SK_KEY_RELEASED, window);
             break;
         case WM_SYSKEYDOWN:
         case WM_KEYDOWN:
-            m_creator->dispatchEvent(skEventType::SK_KEY_PRESSED, window);
+            m_creator->dispatchEvent(SK_KEY_PRESSED, window);
             break;
         default:
             break;
