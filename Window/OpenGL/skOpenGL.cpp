@@ -25,23 +25,33 @@
 #include "Utils/skFixedString.h"
 
 #if SK_PLATFORM == SK_PLATFORM_WIN32
-HMODULE opengl = 0;
+HMODULE opengl = nullptr;
 
 void* WIN32_getProcAddress(HMODULE mod, char* str)
 {
+    if (!opengl)
+        return nullptr;
+
     // hack for loading gl profile 1.1
     // apparently it was made inaccessible
     // from WGL
-
-    void* sym =  GetProcAddress(opengl, str);
+    void* sym = (void*)GetProcAddress(opengl, str);
     if (!sym)
-        sym = wglGetProcAddress(str);
+        sym = (void*)wglGetProcAddress(str);
+
     return sym;
 }
 
 #elif SK_PLATFORM == SK_PLATFORM_LINUX
 #include <dlfcn.h>
-void* opengl = 0;
+void* opengl = nullptr;
+
+void* LINUX_getProcAddress(void* mod, char* str)
+{
+    if (!opengl)
+        return nullptr;
+    return dlsym(mod, str);
+}
 
 #endif
 
@@ -55,7 +65,7 @@ skGetOpenGL_Symbol
 #if SK_PLATFORM == SK_PLATFORM_WIN32
 #define skGetOpenGL_Symbol(X, Y) ((Y = (X)WIN32_getProcAddress(opengl, #Y)) != 0)
 #elif SK_PLATFORM == SK_PLATFORM_LINUX
-#define skGetOpenGL_Symbol(X, Y) ((Y = (X)dlsym(opengl, #Y ) ) != 0)
+#define skGetOpenGL_Symbol(X, Y) ((Y = (X)LINUX_getProcAddress(opengl, #Y)) != 0)
 #endif
 
 /*
@@ -689,24 +699,13 @@ bool skLoadGL_ARB_framebuffer_object(void)
 static skOpenGLCapabilities g_caps;
 
 
-/*
-===================
-skGetOpenGLCapabilities
-===================
-*/
 skOpenGLCapabilities* skGetOpenGLCapabilities(void)
 {
     return &g_caps;
 }
-/*
-===================
-skLoadOpenGL
-===================
-*/
+
 bool skLoadOpenGL(void)
 {
-
-
 #if SK_PLATFORM == SK_PLATFORM_WIN32
     opengl = LoadLibrary("Opengl32.dll");
     if (!opengl)
@@ -716,7 +715,7 @@ bool skLoadOpenGL(void)
     if (!opengl)
         return false;
 #endif
-    skFixedString<32> str = (const char*) glGetString(GL_VERSION);
+    const skFixedString<32> str = (const char*) glGetString(GL_VERSION);
     skLogf(LD_INFO, "Loading OpenGL %s\n", str.c_str());
 
     g_caps.skOpenGL_1_1 = skLoadOpenGL_1_1();
@@ -742,9 +741,6 @@ bool skLoadOpenGL(void)
     if (g_caps.skOpenGL_ARB_framebuffer_object)
         skLogf(LD_INFO, "Loaded: OpenGL ARB_framebuffer_object profile.\n");
 
-#if SK_PLATFORM == SK_PLATFORM_WIN32
-    opengl = 0;
-#endif
-
+    opengl = nullptr;
     return true;
 }

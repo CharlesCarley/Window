@@ -22,6 +22,7 @@
 #include "Window/Win32/skWindowContextWin32.h"
 #include "Utils/skDebugger.h"
 #include "Utils/skLogger.h"
+#include "Utils/skDisableWarnings.h"
 #include "Utils/skPlatformHeaders.h"
 #include "Window/Win32/skWindowWin32.h"
 #include "Window/skWindowManager.h"

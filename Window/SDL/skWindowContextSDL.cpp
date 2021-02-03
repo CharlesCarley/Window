@@ -21,6 +21,7 @@
 */
 #include "Window/SDL/skWindowContextSDL.h"
 #include <SDL.h>
+#include "Utils/skDisableWarnings.h"
 #include "Utils/skLogger.h"
 #include "Window/SDL/skWindowSDL.h"
 #include "Window/skWindowManager.h"
@@ -105,17 +106,17 @@ void skWindowContextSDL::handleWindowEvent(SDL_Event& evt)
             win->notifySizeChange(evt.window.data1, evt.window.data2);
 
             if (shouldDispatch())
-                m_creator->dispatchEvent(skEventType::SK_WIN_SIZE, win);
+                m_creator->dispatchEvent(SK_WIN_SIZE, win);
         }
         else if (evt.window.event == SDL_WINDOWEVENT_EXPOSED)
         {
             if (shouldDispatch())
-                m_creator->dispatchEvent(skEventType::SK_WIN_PAINT, win);
+                m_creator->dispatchEvent(SK_WIN_PAINT, win);
         }
         else if (evt.window.event == SDL_WINDOWEVENT_CLOSE)
         {
             if (shouldDispatch())
-                m_creator->dispatchEvent(skEventType::SK_WIN_DESTROY, win);
+                m_creator->dispatchEvent(SK_WIN_DESTROY, win);
 
             m_creator->destroy(win);
             m_shouldDispatch = false;
@@ -133,9 +134,9 @@ void skWindowContextSDL::handleKeyEvent(SDL_Event& evt) const
         if (shouldDispatch())
         {
             if (evt.key.type == SDL_KEYDOWN)
-                m_creator->dispatchEvent(skEventType::SK_KEY_PRESSED, win);
+                m_creator->dispatchEvent(SK_KEY_PRESSED, win);
             else
-                m_creator->dispatchEvent(skEventType::SK_KEY_RELEASED, win);
+                m_creator->dispatchEvent(SK_KEY_RELEASED, win);
         }
     }
 }
@@ -150,7 +151,7 @@ void skWindowContextSDL::handleMouseEvent(SDL_Event& evt) const
             win->handleMouseWheel(evt.wheel);
 
             if (shouldDispatch())
-                m_creator->dispatchEvent(skEventType::SK_MOUSE_WHEEL, win);
+                m_creator->dispatchEvent(SK_MOUSE_WHEEL, win);
         }
     }
     else if (evt.type == SDL_MOUSEBUTTONDOWN || evt.type == SDL_MOUSEBUTTONUP)
@@ -163,9 +164,9 @@ void skWindowContextSDL::handleMouseEvent(SDL_Event& evt) const
             if (shouldDispatch())
             {
                 if (evt.type == SDL_MOUSEBUTTONDOWN)
-                    m_creator->dispatchEvent(skEventType::SK_MOUSE_PRESSED, win);
+                    m_creator->dispatchEvent(SK_MOUSE_PRESSED, win);
                 else
-                    m_creator->dispatchEvent(skEventType::SK_MOUSE_RELEASED, win);
+                    m_creator->dispatchEvent(SK_MOUSE_RELEASED, win);
             }
         }
     }
@@ -177,7 +178,7 @@ void skWindowContextSDL::handleMouseEvent(SDL_Event& evt) const
             win->handleMouseMotion(evt.motion);
 
             if (shouldDispatch())
-                m_creator->dispatchEvent(skEventType::SK_MOUSE_MOVED, win);
+                m_creator->dispatchEvent(SK_MOUSE_MOVED, win);
         }
     }
 }

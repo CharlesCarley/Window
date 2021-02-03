@@ -24,15 +24,11 @@
 
 #include "Utils/Config/skConfig.h"
 
-
 #if SK_PLATFORM == SK_PLATFORM_WIN32
     #define GL3_APIENTRY  __stdcall
 #else
     #define GL3_APIENTRY
 #endif
-
-
-
 
 #define GL3_APIENTRYP GL3_APIENTRY *
 #define GL3_API extern "C"

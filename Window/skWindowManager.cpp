@@ -20,6 +20,7 @@
 -------------------------------------------------------------------------------
 */
 #include "skWindowManager.h"
+#include "Utils/skDisableWarnings.h"
 #include "SDL/skWindowContextSDL.h"
 #include "SDL/skWindowSDL.h"
 #include "Utils/skLogger.h"
@@ -105,12 +106,12 @@ skWindowContext* skWindowManager::createContextInstance()
 {
     skWindowContext* context;
 
-    if (m_contextType == skContextType::WM_CTX_INJECT)
+    if (m_contextType == WM_CTX_INJECT)
     {
         context = new skWindowManagerContextInject(this);
         context->initialize();
     }
-    else if (m_contextType == skContextType::WM_CTX_PLATFORM)
+    else if (m_contextType == WM_CTX_PLATFORM)
     {
         context = new skWindowContextPlat(this);
         context->initialize();
@@ -127,9 +128,9 @@ skWindow* skWindowManager::createWindowInstance()
 {
     skWindow* window;
 
-    if (m_contextType == skContextType::WM_CTX_INJECT)
+    if (m_contextType == WM_CTX_INJECT)
         window = new skWindowInject(this);
-    else if (m_contextType == skContextType::WM_CTX_PLATFORM)
+    else if (m_contextType == WM_CTX_PLATFORM)
         window = new skPlatformWindow(this);
     else
         window = new skPlatformWindowSDL(this);
@@ -141,8 +142,8 @@ void skWindowManager::dispatchInitialEvents(void)
     if (m_postShow)
     {
         m_postShow = false;
-        this->broadcastEvent(skEventType::SK_WIN_SIZE);
-        this->broadcastEvent(skEventType::SK_WIN_PAINT);
+        this->broadcastEvent(SK_WIN_SIZE);
+        this->broadcastEvent(SK_WIN_PAINT);
     }
 }
 
@@ -207,7 +208,7 @@ void skWindowManager::removeHandler(skWindowHandler* handler)
 {
     const SKuint32 loc = m_handlers.find(handler);
 
-    if (loc != SK_NPOS32)
+    if (loc != m_handlers.npos)
         m_handlers.remove(loc);
 }
 
