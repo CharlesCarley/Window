@@ -27,7 +27,7 @@
 #if SK_PLATFORM == SK_PLATFORM_WIN32
 HMODULE opengl = nullptr;
 
-void* WIN32_getProcAddress(HMODULE mod, char* str)
+void* WIN32_getProcAddress(HMODULE mod, const char* str)
 {
     if (!opengl)
         return nullptr;
@@ -46,7 +46,7 @@ void* WIN32_getProcAddress(HMODULE mod, char* str)
 #include <dlfcn.h>
 void* opengl = nullptr;
 
-void* LINUX_getProcAddress(void* mod, char* str)
+void* LINUX_getProcAddress(void* mod, const char* str)
 {
     if (!opengl)
         return nullptr;
