@@ -79,7 +79,9 @@ public:
     {
     }
 
-    ~skWin32CommandLine() = default;
+    ~skWin32CommandLine()
+    {
+    }
 
     int    argc;
     char** argv;
