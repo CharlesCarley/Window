@@ -52,47 +52,47 @@ public:
     {
         switch (event)
         {
-        case skEventType::SK_WIN_DESTROY:
+        case SK_WIN_DESTROY:
             skLogf(LD_INFO, "SK_WIN_DESTROY\n");
             break;
-        case skEventType::SK_WIN_PAINT:
+        case SK_WIN_PAINT:
             skLogf(LD_INFO, "SK_WIN_PAINT\n");
             break;
-        case skEventType::SK_MOUSE_MOVED:
+        case SK_MOUSE_MOVED:
             skLogf(LD_INFO, "SK_MOUSE_MOVED\n");
             skLogf(LD_WARN, " Absolute (%d, %d)\n", (int)window->getMouseRef().x.abs, (int)window->getMouseRef().y.abs);
             skLogf(LD_WARN, " Relative (%d, %d)\n", (int)window->getMouseRef().x.rel, (int)window->getMouseRef().y.rel);
             break;
-        case skEventType::SK_WIN_SIZE:
+        case SK_WIN_SIZE:
             skLogf(LD_INFO, "SK_WIN_SIZE (%d, %d)\n", (int)window->getWidth(), (int)window->getHeight());
             break;
-        case skEventType::SK_WIN_EVT_UNKNOWN:
+        case SK_WIN_EVT_UNKNOWN:
             break;
-        case skEventType::SK_KEY_PRESSED:
+        case SK_KEY_PRESSED:
             skLogf(LD_INFO, "SK_KEY_PRESSED\n");
             skLogf(LD_WARN, " %s\n", skKeyboard::toString(window->getKeyboardRef().key));
             break;
-        case skEventType::SK_KEY_RELEASED:
+        case SK_KEY_RELEASED:
             skLogf(LD_INFO, "SK_KEY_RELEASED\n");
             skLogf(LD_WARN, " %s\n", skKeyboard::toString(window->getKeyboardRef().key));
             break;
-        case skEventType::SK_MOUSE_PRESSED:
+        case SK_MOUSE_PRESSED:
             skLogf(LD_INFO, "SK_MOUSE_CLICKED\n");
             skLogf(LD_WARN, " %s\n", skMouse::toString(window->getMouseRef().button));
             break;
-        case skEventType::SK_MOUSE_RELEASED:
+        case SK_MOUSE_RELEASED:
             skLogf(LD_INFO, "SK_MOUSE_RELEASED\n");
             skLogf(LD_WARN, " %s\n", skMouse::toString(window->getMouseRef().button));
             break;
-        case skEventType::SK_MOUSE_WHEEL:
+        case SK_MOUSE_WHEEL:
             skLogf(LD_INFO, "SK_MOUSE_WHEEL\n");
             skLogf(LD_WARN, " Absolute (%d)\n", (int)window->getMouseRef().z.abs);
             skLogf(LD_WARN, " Relative (%d)\n", (int)window->getMouseRef().z.rel);
             break;
-        case skEventType::SK_WIN_SHOWN:
+        case SK_WIN_SHOWN:
             skLogf(LD_INFO, "SK_WIN_SHOWN\n");
             break;
-        case skEventType::SK_WIN_HIDDEN:
+        case SK_WIN_HIDDEN:
             skLogf(LD_INFO, "SK_WIN_HIDDEN\n");
             break;
         }
@@ -101,7 +101,7 @@ public:
     void handle(const skEventType& event, skWindow* window) override
     {
         logEvent(event, window);
-        if (event == skEventType::SK_WIN_PAINT)
+        if (event == SK_WIN_PAINT)
         {
             glClearColor(m_val, m_val, m_val, 1);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -113,7 +113,7 @@ public:
 
             window->flush();
         }
-        else if (event == skEventType::SK_KEY_PRESSED)
+        else if (event == SK_KEY_PRESSED)
         {
             if (window->getKeyboardRef().isKeyDown(KC_Q) && window->getKeyboardRef().isKeyDown(KC_CTRL))
                 window->close();
@@ -143,7 +143,7 @@ public:
     void testDestroyAll()
     {
         for (int i = 0; i < 6; ++i)
-            m_manager->create("Test", 800, 600, WM_WF_DIALOG | WM_WF_SHOWN);
+            m_manager->create("Test", 640, 480, WM_WF_SHOW_CENT_DIA);
         m_manager->processInteractive();
         m_manager->destroyAll();
     }
@@ -154,9 +154,9 @@ public:
         m_manager->addHandler(this);
 
         m_window = m_manager->create("Test",
-                                     800,
-                                     600,
-                                     WM_WF_CENTER | WM_WF_DIALOG | WM_WF_SHOWN);
+                                     320,
+                                     240,
+                                     WM_WF_SHOW_CENT_DIA);
         if (m_window == nullptr)
             return 1;
 
@@ -167,9 +167,17 @@ public:
 
 int main(int, char**)
 {
-    skLogger log;
-    log.setFlags(LF_STDOUT);
+    try
+    {
+        skLogger log;
+        log.setFlags(LF_STDOUT);
 
-    Application app;
-    return app.run();
+        Application app;
+        return app.run();
+    }
+    catch (...)
+    {
+        // ...
+    }
+    return 0;
 }

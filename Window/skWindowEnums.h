@@ -67,6 +67,12 @@ typedef enum skWindowFlags
     /// Create a window that is initially shown.
     /// </summary>
     WM_WF_SHOWN = 0x0080,
+    
+    /// <summary>
+    /// Create a window that is initially shown, centered and cannot be resized.
+    /// </summary>
+    WM_WF_SHOW_CENT_DIA = WM_WF_SHOWN | WM_WF_CENTER | WM_WF_DIALOG,
+
 } skWindowFlags;
 
 /// <summary>
@@ -295,6 +301,7 @@ typedef enum skEventType
     /// Called after a wheel state change.
     /// </summary>
     SK_MOUSE_WHEEL,
+
 } skEventType;
 
 /// <summary>
