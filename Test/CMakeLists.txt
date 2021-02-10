@@ -25,8 +25,12 @@ set(Target_SRC
 )
 
 include_directories(. ${Utils_INCLUDE} ${Window_INCLUDE})
-add_executable(${TargetName} ${Target_SRC})
 
+if (Window_DEFINE_WINMAIN)
+    add_executable(${TargetName} WIN32 ${Target_SRC})
+else()
+    add_executable(${TargetName} ${Target_SRC})
+endif()
 
 target_link_libraries(${TargetName} ${Extern_LIBS})
 

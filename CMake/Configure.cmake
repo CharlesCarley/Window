@@ -21,8 +21,9 @@
 include(StaticRuntime)
 set_static_runtime()
 
-option(Window_USE_FOLDERS  "Use solution folders" ON)
-option(Window_WITH_SDL     "Build with support for SDL" OFF)
+option(Window_USE_FOLDERS     "Use solution folders" ON)
+option(Window_WITH_SDL        "Build with support for SDL" OFF)
+option(Window_DEFINE_WINMAIN  "Build a wrapper around WinMain that calls main" OFF)
 
 if (Window_USE_FOLDERS)
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)

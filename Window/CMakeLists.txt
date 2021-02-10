@@ -76,6 +76,12 @@ if (WIN32)
         Win32/skWindowContextWin32.cpp
     )
 
+    if (Window_DEFINE_WINMAIN)
+        list(APPEND Window_PLAT_SRC 
+            Win32/skWin32Main.cpp
+        )
+    endif()
+
 elseif (UNIX)
 
     find_package(X11  REQUIRED)
