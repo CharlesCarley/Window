@@ -49,17 +49,22 @@ void CRT_TestMemory()
     _CrtSetReportHook(CRT_ReportHook);
 }
 
-void CRT_Dump(const char* f)
+int CRT_Dump(const char* f)
 {
     freopen(f, "w", stderr);
 
+    int rc = 1;
     if (_CrtDumpMemoryLeaks() == 0)
+    {
         fprintf(stderr, "No memory leaks were found using _CrtDumpMemoryLeaks\n");
+        rc = 0;
+    }
     _CrtSetReportHook(nullptr);
+    return rc;
 }
 
-#define TestMemory CRT_TestMemory();
-#define DumpMem(f) CRT_Dump(f);
+#define TestMemory CRT_TestMemory()
+#define DumpMem(f) CRT_Dump(f)
 
 #else
 #define TestMemory
@@ -115,7 +120,7 @@ public:
     bool load(LPSTR args, SKsize nCmd)
     {
         skFixedString<272> fname;
-        const DWORD size = GetModuleFileName(GetModuleHandle(nullptr),
+        const DWORD        size = GetModuleFileName(GetModuleHandle(nullptr),
                                              fname.ptr(),
                                              fname.capacity());
         if (size > 0)
@@ -146,16 +151,16 @@ int WINAPI WinMain(_In_ HINSTANCE     hInst,
 {
     TestMemory;
     int rc = -1;
-
-    { // To make sure everything goes out of scope
+    {  // To make sure everything goes out of scope
 
         skWin32CommandLine cmd;
         if (cmd.load(lpCmdLine, nShowCmd))
             rc = main(cmd.argc, cmd.argv);
         else
             fprintf(stderr, "Failed to extract command line parameters.\n");
-    } 
+    }
 
-    DumpMem("memdump.log");
+    if (DumpMem("memdump.log") != 0)
+        return 1;
     return rc;
 }

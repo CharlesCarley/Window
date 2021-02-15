@@ -130,6 +130,11 @@ public:
     /// </summary>
     void removeHandler(skWindowHandler* handler);
 
+    /// <summary>
+    /// Deletes all handlers attached to the manager.
+    /// </summary>
+    void deleteAllHandlers();
+
     /// <returns>Returns true if any handlers are registered.</returns>
     bool hasHandlers() const
     {

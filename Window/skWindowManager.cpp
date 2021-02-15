@@ -20,9 +20,9 @@
 -------------------------------------------------------------------------------
 */
 #include "skWindowManager.h"
-#include "Utils/skDisableWarnings.h"
 #include "SDL/skWindowContextSDL.h"
 #include "SDL/skWindowSDL.h"
+#include "Utils/skDisableWarnings.h"
 #include "Utils/skLogger.h"
 #include "Window/Inject/skWindowContextInject.h"
 #include "Window/Inject/skWindowInject.h"
@@ -210,6 +210,14 @@ void skWindowManager::removeHandler(skWindowHandler* handler)
 
     if (loc != m_handlers.npos)
         m_handlers.remove(loc);
+}
+
+void skWindowManager::deleteAllHandlers()
+{
+    HandlerArray::Iterator it = m_handlers.iterator();
+    while (it.hasMoreElements())
+        delete it.getNext();
+    m_handlers.clear();
 }
 
 void skWindowManager::destroy(skWindow* window)
