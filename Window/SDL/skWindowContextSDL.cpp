@@ -61,6 +61,9 @@ void skWindowContextSDL::process(void)
 
     } while (waitForNext);
 
+    if (!m_refresh.empty())
+        invalidateWindows();
+
     m_shouldDispatch = false;
 }
 
@@ -71,6 +74,35 @@ void skWindowContextSDL::processInteractive(bool dispatch)
     SDL_Event msg;
     while (SDL_PollEvent(&msg))
         handleEvent(msg);
+
+    if (!m_refresh.empty())
+        invalidateWindows();
+}
+
+void skWindowContextSDL::queueRefreshWindow(skWindowSDL* win)
+{
+    if (m_refresh.find(win) == m_refresh.npos)
+        m_refresh.push_back(win);
+}
+
+void skWindowContextSDL::invalidateWindows()
+{
+    if (!m_refresh.empty())
+    {
+        WindowArray::Iterator it = m_refresh.iterator();
+        while (it.hasMoreElements())
+        {
+            skWindowSDL* win = it.getNext();
+
+            SDL_Event evt{};
+            evt.type            = SDL_WINDOWEVENT;
+            evt.window.event    = SDL_WINDOWEVENT_EXPOSED;
+            evt.window.windowID = win->m_id;
+            handleEvent(evt);
+        }
+
+        m_refresh.resizeFast(0);
+    }
 }
 
 void skWindowContextSDL::handleEvent(SDL_Event& evt)

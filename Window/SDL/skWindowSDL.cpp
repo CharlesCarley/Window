@@ -23,6 +23,7 @@
 #include <SDL.h>
 #include "OpenGL/skOpenGL.h"
 #include "Utils/skLogger.h"
+#include "Window/SDL/skWindowContextSDL.h"
 #include "Window/skWindowManager.h"
 #include "Window/skWindowTypes.h"
 
@@ -93,11 +94,9 @@ void skWindowSDL::create(const char* title, SKuint32 w, SKuint32 h, SKuint32 fla
 
 void skWindowSDL::refresh(void)
 {
-    SDL_Event evt{};
-    evt.type            = SDL_WINDOWEVENT;
-    evt.window.event    = SDL_WINDOWEVENT_EXPOSED;
-    evt.window.windowID = m_id;
-    SDL_PushEvent(&evt);
+    skWindowContextSDL* context = (skWindowContextSDL*)getContext();
+    if (context)
+        context->queueRefreshWindow(this);
 }
 
 void skWindowSDL::show(bool v)

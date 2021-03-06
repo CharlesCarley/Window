@@ -27,10 +27,22 @@
 #include <SDL.h>
 #include "Window/skWindowContext.h"
 #include "Window/skWindowTypes.h"
+class skWindowSDL;
 
 class skWindowContextSDL final : public skWindowContext
 {
+public:
+    typedef skArray<skWindowSDL*> WindowArray;
+
 private:
+    friend class skWindowSDL;
+
+    WindowArray m_refresh;
+
+    void queueRefreshWindow(skWindowSDL*);
+
+    void invalidateWindows();
+
     void handleEvent(SDL_Event& evt);
 
     void handleWindowEvent(SDL_Event& evt);

@@ -26,6 +26,7 @@
 #include "Window/skWindowManager.h"
 #include "Window/skWindowTypes.h"
 #include "skWindowContextWin32.h"
+#include "Utils/skDisableWarnings.h"
 #include "Utils/skLogger.h"
 
 #define MOUSE_STATE(m) ((m) == WM_LBUTTONDOWN || (m) == WM_MBUTTONDOWN || \
