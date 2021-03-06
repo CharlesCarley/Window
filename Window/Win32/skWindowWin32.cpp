@@ -21,13 +21,13 @@
 */
 #include "Window/Win32/skWindowWin32.h"
 #include "OpenGL/skOpenGL.h"
+#include "Utils/skDisableWarnings.h"
+#include "Utils/skLogger.h"
 #include "Utils/skPlatformHeaders.h"
 #include "Window/skWindowContext.h"
 #include "Window/skWindowManager.h"
 #include "Window/skWindowTypes.h"
 #include "skWindowContextWin32.h"
-#include "Utils/skDisableWarnings.h"
-#include "Utils/skLogger.h"
 
 #define MOUSE_STATE(m) ((m) == WM_LBUTTONDOWN || (m) == WM_MBUTTONDOWN || \
                         (m) == WM_RBUTTONDOWN)                            \
@@ -159,13 +159,11 @@ void skWindowWin32::flush(void)
 
 void skWindowWin32::setupOpenGL(void)
 {
-
     if (!m_dc)
     {
         skLogd(LD_ERROR, "Invalid device context\n");
         return;
     }
-
 
     PIXELFORMATDESCRIPTOR pixelFormat = {};
 
