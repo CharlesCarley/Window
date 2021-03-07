@@ -84,7 +84,7 @@ void skWindowContextX11::processInteractive(bool dispatch)
     if (!m_display)
         return;
 
-    m_shouldDispatch = true;
+    m_shouldDispatch = dispatch;
     XEvent evt       = {};
     do
     {
@@ -140,15 +140,17 @@ void skWindowContextX11::handleConfigure(XEvent& evt, skWindowX11* win) const
 void skWindowContextX11::handleExpose(XEvent& evt, skWindowX11* win) const
 {
     SK_ASSERT(win);
-
     // Count determines the number of expose events in the queue.
-    // Here, only the last one is needed. For now this just needs to know
+    // Here, only the last one is needed. This just needs to know
     // that something needs redrawn.
     if (evt.xexpose.count == 0)
     {
         if (shouldDispatch())
             m_creator->dispatchEvent(skEventType::SK_WIN_PAINT, win);
     }
+
+    // Unblock the refresh call.
+    win->m_dirty  = false;
 }
 
 void skWindowContextX11::handleDestroy(XEvent&, skWindowX11* win) const

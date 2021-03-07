@@ -243,15 +243,18 @@ void skWindowX11::refresh(void)
 
     if (m_display && m_window)
     {
+        XLockDisplay(m_display);
         XEvent e = {};
 
-        e.type           = Expose;
-        e.xexpose.count  = 0;
-        e.xexpose.window = m_window;
+        e.type               = Expose;
+        e.xexpose.count      = 0;
+        e.xexpose.window     = m_window;
 
-        if (XSendEvent(m_display, m_window, 0, ExposureMask, &e) == 0)
+        if (XSendEvent(m_display, m_window, False, ExposureMask, &e) == 0)
             skLogd(LD_ERROR, "XSendEvent failed\n");
 
+        XFlush(m_display);
+        XUnlockDisplay(m_display);
         m_dirty = true;
     }
 }
