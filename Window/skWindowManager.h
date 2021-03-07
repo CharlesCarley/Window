@@ -29,7 +29,7 @@
 /// Manages event handling, creation and deletion
 /// for windows in this system.
 /// </summary>
-class skWindowManager
+class skWindowManager final
 {
 public:
     typedef skHashTable<SKsize, skWindow*> WindowHash;
@@ -57,7 +57,22 @@ private:
     void handleLoopStart();
 
 public:
-    explicit skWindowManager(skContextType type = skContextType::WM_CTX_PLATFORM);
+
+    /// <summary>
+    /// Main constructor for a window manager.
+    /// </summary>
+    /// <param name="type">
+    /// Specifies the backend platform to use. If this is SDL and
+    ///  SDL support is not enabled, then it will default to the native 
+    ///  platform backend
+    /// </param>
+    /// <param name="handler">
+    /// Provides an option to add a window message 
+    /// handler on construction. 
+    /// </param>
+    explicit skWindowManager(skContextType    type    = skContextType::WM_CTX_PLATFORM,
+                             skWindowHandler* handler = nullptr);
+
     ~skWindowManager();
 
     /// <summary>
@@ -81,7 +96,6 @@ public:
     /// Schedules all windows for deletion.
     /// </summary>
     void destroyAll();
-
 
     /// <summary>
     /// Preforms one event poling loop.

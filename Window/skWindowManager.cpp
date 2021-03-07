@@ -76,12 +76,15 @@
 
 #endif
 
-skWindowManager::skWindowManager(skContextType type) :
+skWindowManager::skWindowManager(skContextType type, skWindowHandler* handler) :
     m_winDirty(true),
     m_contextType(type),
     m_postShow(true)
 {
     m_context = createContextInstance();
+
+    if (handler != nullptr)
+        addHandler(handler);
 }
 
 skWindowManager::~skWindowManager()
