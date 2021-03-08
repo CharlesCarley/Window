@@ -35,7 +35,6 @@ const SKuint32 SK_eventMask = ExposureMask | StructureNotifyMask |
                               PointerMotionMask | VisibilityChangeMask | ButtonPressMask |
                               ButtonReleaseMask | KeyPressMask | KeyReleaseMask;
 
-
 skWindowX11::skWindowX11(skWindowManager* creator) :
     skWindow(creator),
     m_display(nullptr),
@@ -246,9 +245,9 @@ void skWindowX11::refresh(void)
         XLockDisplay(m_display);
         XEvent e = {};
 
-        e.type               = Expose;
-        e.xexpose.count      = 0;
-        e.xexpose.window     = m_window;
+        e.type           = Expose;
+        e.xexpose.count  = 0;
+        e.xexpose.window = m_window;
 
         if (XSendEvent(m_display, m_window, False, ExposureMask, &e) == 0)
             skLogd(LD_ERROR, "XSendEvent failed\n");
@@ -297,7 +296,6 @@ void skWindowX11::flush(void)
     m_dirty = false;
 }
 
-
 void skWindowX11::notifySize(SKuint32 w, SKuint32 h)
 {
     m_width  = w;
@@ -329,7 +327,6 @@ void skWindowX11::handleWheel(const XButtonEvent& event) const
     if (event.button == 4 || event.button == 5)
         __notifyWheel(event.button == 4 ? 1 : -1);
 }
-
 
 void skWindowX11::handleKey(XEvent& event) const
 {

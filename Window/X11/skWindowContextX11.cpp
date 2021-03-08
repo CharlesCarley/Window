@@ -150,7 +150,7 @@ void skWindowContextX11::handleExpose(XEvent& evt, skWindowX11* win) const
     }
 
     // Unblock the refresh call.
-    win->m_dirty  = false;
+    win->m_dirty = false;
 }
 
 void skWindowContextX11::handleDestroy(XEvent&, skWindowX11* win) const
