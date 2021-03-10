@@ -19,7 +19,6 @@
   3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------------
 */
-
 #include "skWindowX11.h"
 #include <X11/Xatom.h>
 #include <cstring>
@@ -235,13 +234,12 @@ void skWindowX11::setupOpenGL(void)
 
 void skWindowX11::_validate(void)
 {
-    if (!m_dirty) 
+    if (!m_dirty)
         return;
 
     if (m_display && m_window)
     {
-
-        XEvent e = {};
+        XEvent e          = {};
         e.type            = Expose;
         e.xexpose.count   = 0;
         e.xexpose.display = m_display;
@@ -249,15 +247,15 @@ void skWindowX11::_validate(void)
 
         if (XSendEvent(m_display, m_window, False, ExposureMask, &e) == 0)
             skLogd(LD_ERROR, "XSendEvent failed\n");
-        
+
         m_dirty = false;
     }
 }
 
 void skWindowX11::refresh(void)
 {
-     if (!m_dirty)
-         m_dirty = true;
+    if (!m_dirty)
+        m_dirty = true;
 
     if (m_dirty)
         ((skWindowContextX11*)m_context)->_refreshWindow(this);

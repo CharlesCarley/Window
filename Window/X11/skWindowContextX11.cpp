@@ -127,6 +127,7 @@ void skWindowContextX11::processInteractive(bool dispatch)
     };
 
     _handleWindows();
+
     m_shouldDispatch = false;
 }
 
@@ -169,7 +170,7 @@ void skWindowContextX11::handleExpose(XEvent& evt, skWindowX11* win) const
     // Count determines the number of expose events in the queue.
     // Here, only the last one is needed. This just needs to know
     // that something needs redrawn.
-    if (evt.xexpose.count <= 0)
+    if (evt.xexpose.count == 0)
     {
         if (shouldDispatch())
             m_creator->dispatchEvent(skEventType::SK_WIN_PAINT, win);
@@ -256,7 +257,7 @@ void skWindowContextX11::processMessage(skWindow* win, XEvent& evt) const
         handleExpose(evt, xWindow);
         break;
     case DestroyNotify:
-    printf("Destroy\n");
+        printf("Destroy\n");
         handleDestroy(evt, xWindow);
         break;
     case MotionNotify:

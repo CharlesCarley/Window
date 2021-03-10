@@ -33,13 +33,13 @@ class skWindowContextX11;
 class skWindowX11 final : public skWindow
 {
 private:
-    skString         m_title;
-    Display*         m_display;
-    XVisualInfo*     m_visual;
-    Window           m_window;
-    GLXContext       m_glContext;
-    bool             m_dirty;
-    SKuint32         m_flags;
+    skString     m_title;
+    Display*     m_display;
+    XVisualInfo* m_visual;
+    Window       m_window;
+    GLXContext   m_glContext;
+    bool         m_dirty;
+    SKuint32     m_flags;
 
     friend class skWindowContextX11;
 

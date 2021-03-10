@@ -31,8 +31,6 @@
 #define MessageFormatLong 32
 #define XNullWindow -1
 
-
-
 class skWindowX11;
 
 class skWindowContextX11 final : public skWindowContext
@@ -44,7 +42,7 @@ private:
     skWindowManager* m_creator;
     Atom             m_deleteAtom;
     WindowArray      m_refresh;
-    
+
     friend class skWindowX11;
 
     Display* getXDisplay(void) const
@@ -70,11 +68,9 @@ private:
 
     void handleClient(XEvent& evt, skWindowX11* win) const;
 
-
-    void _refreshWindow(skWindowX11 *win);
+    void _refreshWindow(skWindowX11* win);
 
     void _handleWindows();
-
 
 public:
     explicit skWindowContextX11(skWindowManager* owner);
