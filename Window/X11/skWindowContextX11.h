@@ -38,10 +38,13 @@ class skWindowX11;
 class skWindowContextX11 final : public skWindowContext
 {
 private:
+    typedef skArray<skWindowX11*> WindowArray;
+
     Display*         m_display;
     skWindowManager* m_creator;
     Atom             m_deleteAtom;
-
+    WindowArray      m_refresh;
+    
     friend class skWindowX11;
 
     Display* getXDisplay(void) const
@@ -66,6 +69,12 @@ private:
     void handleKey(XEvent& evt, skWindowX11* win) const;
 
     void handleClient(XEvent& evt, skWindowX11* win) const;
+
+
+    void _refreshWindow(skWindowX11 *win);
+
+    void _handleWindows();
+
 
 public:
     explicit skWindowContextX11(skWindowManager* owner);

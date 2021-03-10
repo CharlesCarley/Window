@@ -79,24 +79,6 @@ skWindow* skWindowContextX11::extractWindowFromEvent(XEvent& evt) const
     }
 }
 
-void skWindowContextX11::processInteractive(bool dispatch)
-{
-    if (!m_display)
-        return;
-
-    m_shouldDispatch = dispatch;
-    XEvent evt       = {};
-    do
-    {
-        XNextEvent(m_display, &evt);
-
-        skWindow* win = extractWindowFromEvent(evt);
-        if (win != nullptr)
-            processMessage(win, evt);
-
-    } while (XPending(m_display));
-}
-
 void skWindowContextX11::process()
 {
     bool waitForMessage = true;
@@ -116,11 +98,55 @@ void skWindowContextX11::process()
                 processMessage(win, evt);
             }
         }
+
+        _handleWindows();
+
         if (waitForMessage)
             usleep(1);
     } while (waitForMessage);
 
     m_shouldDispatch = false;
+}
+
+void skWindowContextX11::processInteractive(bool dispatch)
+{
+    if (!m_display)
+        return;
+
+    m_shouldDispatch = dispatch;
+
+    XEvent evt = {};
+
+    while (XPending(m_display))
+    {
+        XNextEvent(m_display, &evt);
+
+        skWindow* win = extractWindowFromEvent(evt);
+        if (win != nullptr)
+            processMessage(win, evt);
+    };
+
+    _handleWindows();
+    m_shouldDispatch = false;
+}
+
+void skWindowContextX11::_handleWindows()
+{
+    if (!m_refresh.empty())
+    {
+        for (SKuint32 i = 0; i < m_refresh.size(); ++i)
+            m_refresh[i]->_validate();
+        m_refresh.clear();
+    }
+}
+
+void skWindowContextX11::_refreshWindow(skWindowX11* win)
+{
+    if (win)
+    {
+        if (m_refresh.find(win) == m_refresh.npos)
+            m_refresh.push_back(win);
+    }
 }
 
 void skWindowContextX11::handleConfigure(XEvent& evt, skWindowX11* win) const
@@ -143,14 +169,11 @@ void skWindowContextX11::handleExpose(XEvent& evt, skWindowX11* win) const
     // Count determines the number of expose events in the queue.
     // Here, only the last one is needed. This just needs to know
     // that something needs redrawn.
-    if (evt.xexpose.count == 0)
+    if (evt.xexpose.count <= 0)
     {
         if (shouldDispatch())
             m_creator->dispatchEvent(skEventType::SK_WIN_PAINT, win);
     }
-
-    // Unblock the refresh call.
-    win->m_dirty = false;
 }
 
 void skWindowContextX11::handleDestroy(XEvent&, skWindowX11* win) const
@@ -233,6 +256,7 @@ void skWindowContextX11::processMessage(skWindow* win, XEvent& evt) const
         handleExpose(evt, xWindow);
         break;
     case DestroyNotify:
+    printf("Destroy\n");
         handleDestroy(evt, xWindow);
         break;
     case MotionNotify:

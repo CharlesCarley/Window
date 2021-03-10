@@ -215,9 +215,7 @@ void skWindowX11::notifyShow(void) const
     if (ctx)
     {
         if (XSetWMProtocols(m_display, m_window, &ctx->m_deleteAtom, 1) == 0)
-        {
             skLogd(LD_ERROR, "XSetWMProtocols failed\n");
-        }
     }
 }
 
@@ -235,27 +233,34 @@ void skWindowX11::setupOpenGL(void)
     }
 }
 
-void skWindowX11::refresh(void)
+void skWindowX11::_validate(void)
 {
-    if (m_dirty)
+    if (!m_dirty) 
         return;
 
     if (m_display && m_window)
     {
-        XLockDisplay(m_display);
-        XEvent e = {};
 
-        e.type           = Expose;
-        e.xexpose.count  = 0;
-        e.xexpose.window = m_window;
+        XEvent e = {};
+        e.type            = Expose;
+        e.xexpose.count   = 0;
+        e.xexpose.display = m_display;
+        e.xexpose.window  = m_window;
 
         if (XSendEvent(m_display, m_window, False, ExposureMask, &e) == 0)
             skLogd(LD_ERROR, "XSendEvent failed\n");
-
-        XFlush(m_display);
-        XUnlockDisplay(m_display);
-        m_dirty = true;
+        
+        m_dirty = false;
     }
+}
+
+void skWindowX11::refresh(void)
+{
+     if (!m_dirty)
+         m_dirty = true;
+
+    if (m_dirty)
+        ((skWindowContextX11*)m_context)->_refreshWindow(this);
 }
 
 void skWindowX11::show(bool v)
@@ -293,7 +298,6 @@ void skWindowX11::flush(void)
         glXSwapBuffers(m_display,
                        m_window);
     }
-    m_dirty = false;
 }
 
 void skWindowX11::notifySize(SKuint32 w, SKuint32 h)
