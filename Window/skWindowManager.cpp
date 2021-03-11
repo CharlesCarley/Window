@@ -78,8 +78,7 @@
 
 skWindowManager::skWindowManager(skContextType type, skWindowHandler* handler) :
     m_winDirty(true),
-    m_contextType(type),
-    m_postShow(true)
+    m_contextType(type)
 {
     m_context = createContextInstance();
 
@@ -142,12 +141,8 @@ skWindow* skWindowManager::createWindowInstance()
 
 void skWindowManager::dispatchInitialEvents(void)
 {
-    if (m_postShow)
-    {
-        m_postShow = false;
-        this->broadcastEvent(SK_WIN_SIZE);
-        this->broadcastEvent(SK_WIN_PAINT);
-    }
+    this->broadcastEvent(SK_WIN_SIZE);
+    this->broadcastEvent(SK_WIN_PAINT);
 }
 
 bool skWindowManager::processInteractive(bool dispatch)

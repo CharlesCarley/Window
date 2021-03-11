@@ -133,14 +133,12 @@ public:
 
     /// <summary>
     /// Provides access to the underlying window handle.
-    /// 
-    /// The win32 backend returns HWND pointer, the SDL and X11 backend return 
+    ///
+    /// The win32 backend returns HWND pointer, the SDL and X11 backend return
     /// an integer id value.
     /// </summary>
     /// <returns>Returns the underlying window system window handle.</returns>
     virtual SKsize getWindowHandle(void) = 0;
-
-
 
     /// <returns>Returns the manager that created this window.</returns>
     skWindowManager* getCreator(void) const
@@ -193,12 +191,12 @@ public:
     }
 
     /// <summary>
-    /// Signals that this window should close. 
-    /// 
-    /// The window will not close immediately. Instead, it is pushed to a 
-    /// list in the manager, then the next call to 
-    /// <see cref="skWindowManager::process">process</see> or 
-    /// <see cref="skWindowManager::process">processInteractive</see> will remove and 
+    /// Signals that this window should close.
+    ///
+    /// The window will not close immediately. Instead, it is pushed to a
+    /// list in the manager, then the next call to
+    /// <see cref="skWindowManager::process">process</see> or
+    /// <see cref="skWindowManager::process">processInteractive</see> will remove and
     /// destroy the window.
     /// </summary>
     void close()

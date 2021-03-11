@@ -100,13 +100,20 @@ void skWindowWin32::create(const char* title, SKuint32 width, SKuint32 height, S
     if (m_hWnd != nullptr)
     {
         ::SetWindowLongPtr(m_hWnd, GWL_USER, (SKuintPtr)this);
+
         UpdateWindow(m_hWnd);
 
         m_dc = GetDC(m_hWnd);
+        if (!m_dc)
+            skLogd(LD_ERROR, "Failed to get the device context\n");
+
         setupOpenGL();
 
-        if (flags & WM_WF_CAPTURE)
-            ShowCursor(FALSE);
+        // Disabled, this use to capture the mouse
+        // and center it in the screen.
+        //
+        // if (flags & WM_WF_CAPTURE)
+        //    ShowCursor(FALSE);
 
         if (flags & WM_WF_SHOWN)
             show(true);
@@ -144,9 +151,9 @@ void skWindowWin32::show(bool doShow)
         if (getContext()->shouldDispatch())
         {
             if (doShow)
-                m_creator->dispatchEvent(skEventType::SK_WIN_SHOWN, this);
+                m_creator->dispatchEvent(SK_WIN_SHOWN, this);
             else
-                m_creator->dispatchEvent(skEventType::SK_WIN_HIDDEN, this);
+                m_creator->dispatchEvent(SK_WIN_HIDDEN, this);
         }
     }
 }
@@ -194,7 +201,7 @@ void skWindowWin32::setupOpenGL(void)
 
 void skWindowWin32::makeCurrent() const
 {
-    if (m_glRC)
+    if (m_glRC && m_dc)
         wglMakeCurrent(m_dc, m_glRC);
 }
 

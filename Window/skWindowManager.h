@@ -43,7 +43,6 @@ protected:
     WindowHash       m_windows;
     WindowArray      m_destroyWindows;
     HandlerArray     m_handlers;
-    bool             m_postShow;
 
 private:
     friend class skWindowContext;

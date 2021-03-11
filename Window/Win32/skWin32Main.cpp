@@ -22,7 +22,7 @@
 #include "Utils/Config/skConfig.h"
 #include "Utils/skDebugger.h"
 
-#if SK_COMPILER == SK_COMPILER_MSVC
+#if SK_COMPILER == SK_COMPILER_MSVC && defined(_DEBUG)
 
 #define _CRTDBG_MAP_ALLOC 1
 
@@ -68,7 +68,7 @@ int CRT_Dump(const char* f)
 
 #else
 #define TestMemory
-#define DumpMem(f)
+#define DumpMem(f) 0
 #endif
 
 #include "Utils/skFixedString.h"
@@ -78,18 +78,18 @@ int CRT_Dump(const char* f)
 class skWin32CommandLine
 {
 public:
+    typedef skFixedString<272> CLString;
+
     skWin32CommandLine() :
-        argc(0),
-        argv(nullptr)
+        m_argc(0),
+        m_argv(nullptr)
     {
     }
 
-    ~skWin32CommandLine()
-    {
-    }
+    ~skWin32CommandLine() = default;
 
-    int    argc;
-    char** argv;
+    int    m_argc;
+    char** m_argv;
 
 private:
     skArray<skString>    m_memory;
@@ -97,45 +97,45 @@ private:
 
     void split(LPSTR args, SKsize nCmd)
     {
-        const SKsize s = skStringUtils::length(args);
+        const SKsize s = skChar::length(args);
         if (s > 0)
         {
-            skFixedString<272> tstr;
+            CLString maxPath;
             for (SKsize i = 0; i < s; ++i)
             {
                 if (args[i] == ' ')
                 {
-                    m_memory.push_back(tstr.c_str());
-                    tstr.clear();
+                    m_memory.push_back(maxPath.c_str());
+                    maxPath.clear();
                 }
                 else
-                    tstr.push_back(args[i]);
+                    maxPath.push_back(args[i]);
             }
-            if (!tstr.empty())
-                m_memory.push_back(tstr.c_str());
+            if (!maxPath.empty())
+                m_memory.push_back(maxPath.c_str());
         }
     }
 
 public:
     bool load(LPSTR args, SKsize nCmd)
     {
-        skFixedString<272> fname;
-        const DWORD        size = GetModuleFileName(GetModuleHandle(nullptr),
-                                             fname.ptr(),
-                                             fname.capacity());
+        CLString    fileName;
+        const DWORD size = GetModuleFileName(GetModuleHandle(nullptr),
+                                             fileName.ptr(),
+                                             CLString::capacity());
         if (size > 0)
         {
-            fname.resize((SKuint16)size);
+            fileName.resize((SKuint16)size);
 
-            m_memory.push_back(skString(fname.c_str()));
+            m_memory.push_back(skString(fileName.c_str()));
             split(args, nCmd);
 
             skArray<skString>::Iterator it = m_memory.iterator();
             while (it.hasMoreElements())
                 m_command.push_back(it.getNext().c_str());
 
-            argc = (int)m_command.size();
-            argv = (char**)m_command.ptr();
+            m_argc = (int)m_command.size();
+            m_argv = (char**)m_command.ptr();
             return true;
         }
         return false;
@@ -144,10 +144,10 @@ public:
 
 extern int main(int argc, char** argv);
 
-int WINAPI WinMain(_In_ HINSTANCE     hInst,
-                   _In_opt_ HINSTANCE hPrevInst,
-                   _In_ LPSTR         lpCmdLine,
-                   _In_ int           nShowCmd)
+int WINAPI WinMain(_In_       HINSTANCE,
+                   _In_opt_   HINSTANCE,
+                   _In_ LPSTR lpCmdLine,
+                   _In_ int   nShowCmd)
 {
     TestMemory;
     int rc = -1;
@@ -155,11 +155,10 @@ int WINAPI WinMain(_In_ HINSTANCE     hInst,
 
         skWin32CommandLine cmd;
         if (cmd.load(lpCmdLine, nShowCmd))
-            rc = main(cmd.argc, cmd.argv);
+            rc = main(cmd.m_argc, cmd.m_argv);
         else
             fprintf(stderr, "Failed to extract command line parameters.\n");
     }
-
     if (DumpMem("memdump.log") != 0)
         return 1;
     return rc;
